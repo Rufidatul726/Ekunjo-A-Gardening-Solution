@@ -1,0 +1,11 @@
+{
+  "name": "spl_ekunjo",
+  "version": "1.0.0",
+  "description": "One stop service for all a novice gardener  needs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rufidatul Radium & Sharif Mohammad Abdullah",
+  "license": "ISC"
+}
