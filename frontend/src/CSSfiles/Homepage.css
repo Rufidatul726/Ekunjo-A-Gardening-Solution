@@ -1,0 +1,41 @@
+.Homepage-div{
+    background-image: url('../images/Background.svg');
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    padding: 0 1rem;
+    margin: 0;
+    position: fixed;
+    z-index: 1;
+}
+
+#Explore-btn{
+    background-color: transparent;
+    color: hwb(140 56% 23%);
+    border: 2px solid #000;
+    font: 1em sans-serif;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+    margin-top: 2rem;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
+
+#Explore-btn:hover{
+    background-color: #225f32;
+    color: #000;
+    transform: scale(1.05);
+}
