@@ -2,12 +2,9 @@
   background-color: rgba(135, 247, 174, 0.425);
   height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  font-family: 'Montserrat', sans-serif;
-  position: relative;
-  overflow: hidden;
+}
+
+#pie-div{
+  color: aliceblue;
+  font-size: 10px;
 }

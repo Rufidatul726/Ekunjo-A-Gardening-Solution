@@ -1,5 +1,5 @@
 import PictureCarousel from '../Components/PictureCarousel';
-
+import {PieChart} from 'react-minimal-pie-chart';
 import '../CSSfiles/Homepage.css';
 
 export default function Homepage(){
@@ -8,12 +8,32 @@ export default function Homepage(){
             <section id="hero" className="d-flex align-items-center justify-content-center">
                 <div className="container">
                 <div className="row">
-                    {/* <div className="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200"> */}
+                    <div className="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
                     <h1 className="logo me-auto"><a href="#">E-Kunjo</a></h1>
                     <h1>Better Solutions For Your Gardening</h1>
-                    {/* </div> */}
+                    </div>
                 </div>
                 </div>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200" id='pie-div'>
+                        <PieChart style={{fontSize: '3.5px', color: 'white'}}
+                            data={[
+                                { title: 'Carbon(C)', value: 45, color: '#E38627' },
+                                { title: 'Oxygen(O)', value: 45, color: '#C13C37' },
+                                { title: 'Hydrozen', value: 6, color: '#6A2135' },
+                                { title: 'Nitrogen', value: 1.5, color: '#E38627' },
+                                { title: 'Potassiam(K)', value: 1, color: '#C13C37' },
+                                { title: 'Phosphorus(P)', value: 0.2, color: '#6A2135' },
+                            ]}
+                        />;
+                        </div>
+                        <div className="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+                           
+                        </div>
+                    </div>
+                </div>
+            
                 
 
             </section>
