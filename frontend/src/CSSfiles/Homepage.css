@@ -1,41 +1,46 @@
-.Homepage-div{
-    background-image: url('../images/Background.svg');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+.slideshow-container {
+    position: relative;
     height: 100vh;
+  }
+  
+  .slideshow-container .slide {
+    position: absolute;
     width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.2rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    padding: 0 1rem;
-    margin: 0;
-    position: fixed;
-    z-index: 1;
-}
-
-#Explore-btn{
-    background-color: transparent;
-    color: hwb(140 56% 23%);
-    border: 2px solid #000;
-    font: 1em sans-serif;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    margin-top: 2rem;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-}
-
-#Explore-btn:hover{
-    background-color: #225f32;
-    color: #000;
-    transform: scale(1.05);
-}
+    animation: slideshow 8s infinite;
+  }
+  
+  @keyframes slideshow {
+    0% {
+      opacity: 0;
+      z-index: -1;
+    }
+    5% {
+      opacity: 1;
+    }
+    25% {
+      opacity: 1;
+      z-index: 1;
+    }
+    30% {
+      opacity: 0;
+      z-index: -1;
+    }
+  }
+  
+  .slide-1 {
+    background-image: url("../images/Background.svg");
+  }
+  
+  .slide-2 {
+    background-image: url("../images/Background1.svg");
+  }
+  
+  .slide-3 {
+    background-image: url("../images/Background2.svg");
+  }
+  
