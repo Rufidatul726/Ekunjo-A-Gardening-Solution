@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+
 import { Nav } from "react-bootstrap";
 import "../CSSfiles/sidenavbar.css";
 
@@ -16,9 +16,9 @@ const SideNavbar = () => {
       <Link to="/services/plantinfo" className="nav-link">
         View Plant Details
       </Link>
-      <NavLink to="/" className="nav-link">
+      <Link to="/" className="nav-link">
         View Plant Diseases
-      </NavLink>
+      </Link>
     </Nav>
   );
 };
