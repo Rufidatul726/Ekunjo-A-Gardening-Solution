@@ -8,6 +8,7 @@ export default function Registration() {
         const [confirmPassword, setConfirmPassword] = useState("");
         const [errorMessage, setErrorMessage] = useState("");
         const [successMessage, setSuccessMessage] = useState(false);
+        const phoneEx= "01234567890";
 
         const handleSubmit = (e) => {
             e.preventDefault();
@@ -25,13 +26,37 @@ export default function Registration() {
                 return;
             }
 
+            if(phone === phoneEx){
+                setErrorMessage("Phone number already exists. Please try again.");
+                setPhone("");
+                setSuccessMessage(false);
+                return;
+            }
+
             console.log("Name:", name);
             console.log("Phone:", phone);
             console.log("Password:", password);
             console.log("Confirm Password:", confirmPassword);
             setErrorMessage("");
-            setSuccessMessage(true);
 
+                //Check if phone number already exists
+            // try{
+            //     const response = await axios.get("http://localhost:9000/users/register", {phone});
+            //     const data = response.json();
+            //     console.log(data);
+            //     if(data){
+            //         setErrorMessage("Phone number already exists. Please try again.");
+            //         setPhone("");
+            //         return;
+            //     }
+
+            //     }catch(err){
+            //     console.log(err);
+            // }
+
+
+
+                //Send data to backend
             // axios.post("http://localhost:9000/users/register", {name, phone, password})
             //     .then(res => {
             //         console.log(res);
@@ -40,6 +65,13 @@ export default function Registration() {
             //     .catch(err => {
             //         console.log(err);
             //     });
+
+            if(password===confirmPassword && phone!==phoneEx && isValidPhoneNumber(phone)){
+                setSuccessMessage(true);
+            }
+            else{
+                setSuccessMessage(false);
+            }
         };
 
         const isValidPhoneNumber = (phoneNumber) => {
@@ -119,7 +151,10 @@ export default function Registration() {
                         </div>
 
                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                            <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Register</button>{
+                            <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Register</button>
+                            </div>
+                            </form>
+                            {
                             successMessage &&
                             (
                                 <div
@@ -143,8 +178,6 @@ export default function Registration() {
                               </div>
                             )
                         }
-                        </div>
-                        </form>
 
                     </div>
                     
