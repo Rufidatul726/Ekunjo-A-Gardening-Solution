@@ -1,10 +1,12 @@
 import PictureCarousel from '../Components/PictureCarousel';
+import Sidenavbar from '../Components/Sidenavbar';
 import {PieChart} from 'react-minimal-pie-chart';
 import '../CSSfiles/Homepage.css';
 
 export default function Homepage(){
     return (
         <div id='homepage-div'> 
+            <Sidenavbar />
             <section id="hero" className="d-flex align-items-center justify-content-center">
                 <div className="container">
                 <div className="row">
