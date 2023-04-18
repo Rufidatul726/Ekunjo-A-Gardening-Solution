@@ -1,5 +1,5 @@
 import PictureCarousel from '../Components/PictureCarousel';
-import Sidenavbar from '../Components/Sidenavbar';
+import Sidenavbar from '../Components/sidenavbar';
 import {PieChart} from 'react-minimal-pie-chart';
 import '../CSSfiles/Homepage.css';
 
