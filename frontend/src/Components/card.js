@@ -1,11 +1,20 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { useState } from 'react';
 
 export default function MyCard(props) {
+  const [isRemoved, setIsRemoved] = useState(false);
+
     const handleClick = () => {
-        window.location.href = 'https://www.example.com';
+        window.location.href = 'https://en.wikipedia.org/wiki/Mango';
     };
+
+    const handleRemove = () => {
+        setIsRemoved(true);
+    };
+
+  if(isRemoved) return null;
 
   return (
     <Card style={{ width: '18rem' }}>
@@ -16,6 +25,9 @@ export default function MyCard(props) {
             {props.description}
             </Card.Text>
             <Button variant="primary" onClick={handleClick}>{props.name}</Button>
+            <button onClick={handleRemove}
+                style={{position: "absolute", top: "0", right: "0", padding: "0.5rem 1rem", border: "none", backgroundColor: "transparent", cursor: "pointer"}}
+            >x</button>
         </Card.Body>
     </Card>
   );

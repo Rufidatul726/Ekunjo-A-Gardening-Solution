@@ -29,33 +29,19 @@ export default function ViewPlantDetails(){
 
   return(
     <div>
-        <section className="intro">
-        <div className="bg-image h-100">
-            <div className="mask d-flex align-items-center h-100">
-            <div className="container">
-                <div className="card mask-custom p-4">
-                <div className="card-body">
-                    <p className="h1 font-weight-bold mb-4 text-white">Discover the Amazing City</p>
-                    <div className="row justify-content-center">
-                    <div className="col-md-6 mb-3 mb-md-0">
-                        <div id="basic" className="form-outline form-white">
-                        <input type="text" id="form1" className="form-control form-control-lg" value={plant} 
-                               onChange={e => setPlant(e.target.value)} required />
-                        <label className="form-label" form="form1">Enter Plant Name</label>
-                        </div>
-                    </div>
-                    
-                    <div className="col-md-2">
-                        <input className="btn btn-info btn-block btn-lg" type="submit" value="Search" onClick={handleSubmit} />
-                        {showComponent && <MyCard {...CardProps}/>}
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-            </div>
+      <div className="col-md-10 mb-3 mb-md-0">
+        <div id="basic" className="form-outline form-white">
+            <input type="text" id="form1" className="form-control form-control-lg" value={plant} 
+                    onChange={e => setPlant(e.target.value)} required />
+            <label className="form-label" form="form1">Enter Plant Name</label>
         </div>
-        </section>
+      </div>          
+      <div className="col-md-2">
+          <input className="btn btn-info btn-block btn-lg" type="submit" value="Search" onClick={handleSubmit} />
+          {showComponent && 
+            <MyCard {...CardProps}/>
+          }
+      </div>
     </div>
   );
  
