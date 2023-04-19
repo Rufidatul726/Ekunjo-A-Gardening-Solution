@@ -1,9 +1,9 @@
 import { Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import BgImage from "../images/Background.svg";
-import BgImage1 from "../images/Background1.svg";
-import BgImage2 from "../images/Background2.svg";
-import BgImage3 from "../images/Background3.svg";
+import BgImage from "../images/bg (1).jpeg";
+import BgImage1 from "../images/bg (2).jpeg";
+import BgImage2 from "../images/bg (3).jpeg";
+import BgImage3 from "../images/bg (4).jpeg";
 
 function PictureCarousel() {
     return (

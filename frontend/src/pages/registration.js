@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 // import axios from "axios";
 
 export default function Registration() {
@@ -180,6 +181,15 @@ export default function Registration() {
                         }
 
                     </div>
+
+                    <div className="text-center text-lg-start mt-4 pt-2">
+                    <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Login</button>
+                    <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
+                        <Link to="/register" className="link-danger">
+                        <span className="text-danger">Register</span>
+                        </Link>
+                    </p>
+                </div>
                     
                     </div>
                 </div>

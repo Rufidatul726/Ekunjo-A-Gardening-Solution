@@ -1,22 +1,31 @@
-import {PieChart} from 'react-minimal-pie-chart';
-import ViewPlantDetails from './services/viewPlantDetails';
+import PictureCarousel from '../Components/PictureCarousel';
 import '../CSSfiles/Homepage.css';
 import { Link } from 'react-router-dom';
+import MyFooter from '../Components/footer';
+import MyNavbar from '../Components/navbar';
 
 export default function Homepage(){
     return (
+        <div id='home-body'>
+            <MyNavbar/>
         <div id='homepage-div'>
-            <section id="hero" className="d-flex align-items-center justify-content-center">
+            <section id="hero" className=" d-flex flex-column align-items-center justify-content-center">
+
                 <div className="container">
-                <div className="row">
-                    <div className="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200">
-                    <h1 className="logo me-auto "><a href="#">E-Kunjo</a></h1>
-                    <h3>Better Solutions For Your Gardening</h3>
-                    <ViewPlantDetails/>
+                <div className="row d-flex justify-content-center">
+                    <div className="col-lg-5 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
+                            id='carousel-div'
+                        >
+                            <PictureCarousel/>
+                    </div>
+                    <div className="col-lg-6 d-flex flex-column align-items-center justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200" id='title-div'>
+                    <h1>Your one stop solution for your gardening needs</h1>
+                    <br/>
+                    <h5>From getting general information about plants to detecting diseases, and many more!</h5>
                     </div>
                 </div>
                 </div>
-                <div className="container">
+                {/* <div className="container">
                     <h5>Relative amounts (out of 100) of the essential nutrients required by most plants</h5>
                     <div className="row">
                         <div className="col-lg-7 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200" id='pie-div'>
@@ -41,14 +50,15 @@ export default function Homepage(){
                         />;
                         </div>
                     </div>
-                </div>
+                </div> */}
             </section>
             <div id='card-whole-div'>
-                <div className="container d-flex align-items-center justify-content-center">
+                <div className="container d-flex align-items-center justify-content-center"
+                >
                     <h1>Our Services</h1>
                 </div>
                 <div className="row">
-                    <Link to= '/services/nursery' className="col-sm-4 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <Link to= '/services/nursery' className="col-sm-3 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
                         <div class="card" id='card-div'>
                             <div class="card-body">
                                 <h3 class="card-title">Find Nursery</h3>
@@ -56,7 +66,15 @@ export default function Homepage(){
                             </div>
                         </div>
                     </Link>
-                    <Link to= '/services/fertilizer' className="col-sm-4 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <Link to= '/services/plantinfo' className="col-sm-3 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card" id='card-div'>
+                            <div class="card-body">
+                                <h3 class="card-title">Search plant details</h3>
+                                <p class="card-text">View the details of your plant</p>  
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to= '/services/fertilizer' className="col-sm-3 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
                         <div class="card" id='card-div'>
                             <div class="card-body">
                                 <h3 class="card-title">Get amount of fertilizer</h3>
@@ -64,7 +82,7 @@ export default function Homepage(){
                             </div>
                         </div>
                     </Link>
-                    <Link to= '/services/nursery' className="col-sm-4 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <Link to= '/services/plantdisease' className="col-sm-3 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
                         <div class="card" id='card-div'>
                             <div class="card-body">
                                 <h3 class="card-title">View Disease of Plant</h3>
@@ -74,6 +92,8 @@ export default function Homepage(){
                     </Link>
                 </div>
             </div>
+            </div>
+         <MyFooter/>
         </div>
     );
 }

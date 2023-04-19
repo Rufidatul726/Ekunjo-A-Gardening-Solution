@@ -1,7 +1,9 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ViewPlantDetails from '../pages/services/viewPlantDetails';
+import { Link } from 'react-router-dom';
 
 export default function MyCard(props) {
   const [isRemoved, setIsRemoved] = useState(false);
@@ -11,10 +13,13 @@ export default function MyCard(props) {
     };
 
     const handleRemove = () => {
-        setIsRemoved(true);
+      setIsRemoved(true) ;
     };
 
-  if(isRemoved) return null;
+  if(isRemoved) {
+    console.log("removed");
+    return null;
+  }
 
   return (
     <Card style={{ width: '18rem' }}>
@@ -22,7 +27,7 @@ export default function MyCard(props) {
         <Card.Body>
             <Card.Title>{props.scientificName}</Card.Title>
             <Card.Text>
-            {props.description}
+                {props.description}
             </Card.Text>
             <Button variant="primary" onClick={handleClick}>{props.name}</Button>
             <button onClick={handleRemove}

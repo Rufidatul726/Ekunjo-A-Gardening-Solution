@@ -1,21 +1,31 @@
+#home-body{
+  background: linear-gradient(rgba(77, 151, 103, 0.425),  rgba(135, 247, 174, 0.425), rgba(255, 255, 255, 0.5) );
+  height: 72vh;
+  width: 100%;
+  padding-left: 0%;
+  padding-right: 0%;
+  padding-top: 0%;
+}
+
 #homepage-div{
   background: linear-gradient(rgba(77, 151, 103, 0.425),  rgba(135, 247, 174, 0.425), rgba(255, 255, 255, 0.5) );
-  height: 120vh;
+  height: 70vh;
   width: 100%;
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 3%;
-
+  text-align: center;
 }
 
-#pie-div{
-  color: aliceblue;
-  font-size: 10px;
-}
+/* #viewplant, #carousel-div, #title-div{
+  border: 2px solid black;
+  padding: 0px 0px 0px 0px;
+} */
 
 #card-whole-div{
+  background: linear-gradient(rgba(255, 255, 255, 0.5),  rgba(135, 247, 174, 0.425), rgba(77, 151, 103, 0.425));
   width: 100%;
-  padding-top: 5%;
+  padding-top: 8%;
   padding-left: 2%;
   padding-right: 2%;
 }
@@ -25,3 +35,15 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 30vh;
 } 
+
+#card-div:hover{
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  height: 30vh;
+}
+
+a, Link{
+  text-decoration: none;
+  color: #344E41;
+}
