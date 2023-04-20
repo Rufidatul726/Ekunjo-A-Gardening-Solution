@@ -107,7 +107,7 @@ export default function Registration() {
                     <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                        <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                        <p class="text-center h1 fw-bold mb-3 mx-1 mx-md-1 mt-1">Sign up</p>
 
                         <form class="mx-1 mx-md-4">
                             {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
@@ -151,7 +151,7 @@ export default function Registration() {
                             </label>
                         </div>
 
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-2">
                             <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Register</button>
                             </div>
                             </form>
@@ -179,19 +179,18 @@ export default function Registration() {
                               </div>
                             )
                         }
+                        {/* <div className="text-center text-lg-start mt-4 pt-2"> */}
+                            <p className="small fw-bold mt-2 pt-1 mb-0">Already have an account? 
+                                <Link to="/login" className="link-danger">
+                                <span className="text-danger"> Log In</span>
+                                </Link>
+                            </p>
+                        {/* </div>    */}
 
                     </div>
 
-                    <div className="text-center text-lg-start mt-4 pt-2">
-                    <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Login</button>
-                    <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
-                        <Link to="/register" className="link-danger">
-                        <span className="text-danger">Register</span>
-                        </Link>
-                    </p>
+                     
                 </div>
-                    
-                    </div>
                 </div>
                 </div>
             </div>
