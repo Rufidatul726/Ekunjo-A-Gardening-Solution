@@ -1,0 +1,25 @@
+.App {
+    font-family: sans-serif;
+    text-align: left;
+  }
+  
+  html,
+  body,
+  #root,
+  .App {
+    margin: 0;
+    height: 100%;
+  }
+  
+  .map {
+    /*width: 700px;*/
+    height: 100%;
+  }
+
+/* Set the background color and font size for the routing instructions */
+.leaflet-routing-container .leaflet-routing-alternatives-container {
+  background-color: white;
+  font-size: 0.9rem;
+  /* height: fit-content;
+  width: 50vh; */
+}

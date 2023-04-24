@@ -1,58 +1,91 @@
-import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, useMap, Marker, Popup, Circle, Polyline } from 'react-leaflet';
-// import tileLayer from '../util/tileLayer';
-import nurseriesData from '../../jsonfiles/data.json';
+import { useEffect } from 'react';
+import data from '../../jsonfiles/data.json';
+import '../../../node_modules/leaflet/dist/leaflet.css'
+import L from 'leaflet';
+import 'leaflet-routing-machine';
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
+import redMarker from '../../images/redMarker.png';
+import './styles.css';
 
-const center = [52.22977, 21.01178];
+const FindNursery = () => {
+  useEffect(() => {
+    const mapOptions = {
+      center: [23.385044, 90.486671],
+      zoom: 10,
+    };
 
-const Location = ({ nurseries }) => {
-    const map = useMap();
-    const [position, setPosition] = useState(null);
-    const [nearbyNurseries, setNearbyNurseries] = useState([]);
+    const map = L.map('map', mapOptions);
+    const tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    });
 
-    useEffect(() => {
-        map.locate({
-        setView: true
+    map.addLayer(tileLayer);
+    
+    const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+      maxZoom: 20,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+    });
+
+    map.addLayer(googleStreets);
+
+    const myIcon = L.icon({
+      iconUrl: redMarker,
+      iconSize: [50, 50],
+      iconAnchor: [22, 94],
+      popupAnchor: [-3, -76],
+    });
+
+    L.Marker.prototype.options.icon = L.icon({
+        iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
+      });
+
+    navigator.geolocation.getCurrentPosition((position) => {
+      const userLat = position.coords.latitude;
+      const userLong = position.coords.longitude;
+
+      const redMarker = L.marker([userLat, userLong], { icon: myIcon });
+      const popUp = redMarker.bindPopup('Your current location');
+      popUp.addTo(map);
+
+      const userLatLng = L.latLng(userLat, userLong);
+
+      data.forEach((nursery) => {
+        const nurseryLatLng = L.latLng(nursery.LATITUDE, nursery.LONGITUDE);
+        nursery.distance = userLatLng.distanceTo(nurseryLatLng);
+      });
+
+      data.sort((a, b) => a.distance - b.distance);
+
+      for (let i = 0; i < 5 && i < data.length; i++) {
+        const nursery = data[i];
+        const nurseryLatLng = L.latLng(nursery.LATITUDE, nursery.LONGITUDE);
+
+        const marker = L.marker(nurseryLatLng).addTo(map);
+        marker.bindPopup(`${nursery.NAME}<br>Distance: ${nursery.distance.toFixed(2)} meters`);
+
+        const routingControl = L.Routing.control({
+          waypoints: [
+            L.latLng(position.coords.latitude, position.coords.longitude),
+            nurseryLatLng,
+          ],
+          routeWhileDragging: true,
+          showAlternatives: false,
+          createMarker: function () {
+            return null;
+          },
         });
-        map.on('locationfound', (event) => {
-        setPosition(event.latlng);
-        const sortedNurseries = nurseries
-            .map((nursery) => ({
-            ...nursery,
-            distance: event.latlng.distanceTo([nursery.latitude, nursery.longitude])
-            }))
-            .sort((a, b) => a.distance - b.distance)
-            .slice(0, 5);
-        setNearbyNurseries(sortedNurseries);
-        });
-    }, [map, nurseries]);
 
-    return position ? (
-        <>
-        <Circle center={position} weight={2} color={'red'} fillColor={'red'} fillOpacity={0.1} radius={500}></Circle>
-        <Marker position={position}>
-            <Popup>You are here</Popup>
-        </Marker>
-        {nearbyNurseries.map((nursery) => (
-            <>
-            <Polyline positions={[position, [nursery.latitude, nursery.longitude]]} />
-            <Marker key={nursery.name} position={[nursery.latitude, nursery.longitude]}>
-                <Popup>{nursery.name}</Popup>
-            </Marker>
-            </>
-        ))}
-        </>
-    ) : null;
+        routingControl.addTo(map);
+      }
+    });
+
+    return () => {
+      map.remove();
+    };
+  }, []);
+
+  return <div id="map" style={{ height: '100vh'} } />;
 };
 
-
-export default function Nursery(){
-    return (
-        <div>       
-            <MapContainer center={center} zoom={18} scrollWheelZoom={false}>
-            {/* <TileLayer {...tileLayer} /> */}
-            <Location nurseries={nurseriesData} />
-            </MapContainer>
-        </div>
-    )
-}
+export default FindNursery;
