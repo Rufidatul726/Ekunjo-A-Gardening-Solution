@@ -31,7 +31,7 @@ const FindNursery = () => {
 
     const myIcon = L.icon({
       iconUrl: redMarker,
-      iconSize: [50, 50],
+      iconSize: [60, 60],
       iconAnchor: [22, 94],
       popupAnchor: [-3, -76],
     });
@@ -57,27 +57,41 @@ const FindNursery = () => {
 
       data.sort((a, b) => a.distance - b.distance);
 
+      const colors = ["violet", "blue", "green", "orange", "black"];
+
       for (let i = 0; i < 5 && i < data.length; i++) {
         const nursery = data[i];
         const nurseryLatLng = L.latLng(nursery.LATITUDE, nursery.LONGITUDE);
-
-        const marker = L.marker(nurseryLatLng).addTo(map);
+      
+        const marker = L.marker(nurseryLatLng, { icon: L.icon({ iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png", iconSize: [25, 41], iconAnchor: [12, 41], }) }).addTo(map);
+        const color = colors[i % colors.length];
+        marker.setIcon(L.icon({
+          iconUrl: `https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+          iconSize: [25, 41],
+          iconAnchor: [12, 41],
+        }));
+        
         marker.bindPopup(`${nursery.NAME}<br>Distance: ${nursery.distance.toFixed(2)} meters`);
-
+        
         const routingControl = L.Routing.control({
           waypoints: [
             L.latLng(position.coords.latitude, position.coords.longitude),
             nurseryLatLng,
           ],
+          lineOptions: {
+            styles: [{ color: color }]
+          },
+          show: false,
           routeWhileDragging: true,
           showAlternatives: false,
           createMarker: function () {
             return null;
           },
         });
-
+      
         routingControl.addTo(map);
       }
+      
     });
 
     return () => {
