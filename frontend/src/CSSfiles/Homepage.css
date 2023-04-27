@@ -30,15 +30,16 @@
   padding-right: 2%;
 }
 
-#card-div{
+#card-div, #card-btn, Link, Button{
   background-color: transparent;
+  color: black;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 30vh;
 } 
 
 #card-div:hover{
-  background-color: rgba(255, 255, 255, 0.5);
-  color: black;
+  background-color: rgba(16, 32, 18, 0.5);
+  color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   height: 30vh;
 }
