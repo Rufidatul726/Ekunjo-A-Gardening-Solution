@@ -47,7 +47,12 @@ const FindNursery = () => {
       const redMarker = L.marker([userLat, userLong], { icon: myIcon });
       const popUp = redMarker.bindPopup('Your current location');
       popUp.addTo(map);
+      redMarker.openPopup();
 
+      // close the pop up after 3 seconds
+      setTimeout(() => {
+        redMarker.closePopup();
+      }, 5000);
       const userLatLng = L.latLng(userLat, userLong);
 
       data.forEach((nursery) => {
