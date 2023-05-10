@@ -8,6 +8,7 @@ const opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.SECRET_KEY;
 
+//test commit
 passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     User.findOne({ _id: jwt_payload.sub })
         .then(user => {
