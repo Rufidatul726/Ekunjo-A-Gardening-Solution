@@ -29,6 +29,7 @@ export default function ViewPlantDetails(){
 
   return(
     <div>
+       <h1 className="text-center" id='diseasedetecttitle-div'>Search for details of Plants</h1>
       <div className="col-md-12 mb-3 mb-md-0">
         <div id="basic" className="form-outline form-control">
             <input type="text" id="form1" className="form-control form-control-lg" 

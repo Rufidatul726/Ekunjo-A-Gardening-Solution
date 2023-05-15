@@ -2,98 +2,159 @@ import '../CSSfiles/Homepage.css';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import PlantDetails from '../pages/services/viewPlantDetails';
-import ViewNursery from '../pages/services/viewNursery';
-import ViewFertilizer from '../pages/services/viewFertilizer';
-import ViewDisease from '../pages/services/viewDisease';
+import FindNursery from '../pages/services/nursery';
+import Fertilizer from '../pages/services/getFertilizerAmount';
+import ViewPlantDisease from '../pages/services/viewPlantDisease';
 
 export default function OurServices(){
-    // const [lastClicked, setLastClicked] = React.useState(false);
-    // const [clickPlant, setClickPlant] = React.useState(false);
-    // const [clickNursery, setClickNursery] = React.useState(false);
-    // const [clickFertilizer, setClickFertilizer] = React.useState(false);
-    // const [clickDisease, setClickDisease] = React.useState(false);
-    const [clickServices, setClickServices] = React.useState(false, false, false, false);
-    const [clickPlant, clickNursery, clickFertilizer, clickDisease] = clickServices;
 
-    const clickServiceRef = React.useRef(false, false, false, false);
-    const [clickPlantRef, clickNurseryRef, clickFertilizerRef, clickDiseaseRef] = clickServiceRef;
+    const [clickPlant, setClickPlant] = React.useState(null);
+    const [clickNursery, setClickNursery] = React.useState(false);
+    const [clickFertilizer, setClickFertilizer] = React.useState(false);
+    const [clickDisease, setClickDisease] = React.useState(false);
 
-    // const clickPlantRef = React.useRef(false);
-    // const clickNurseryRef = React.useRef(false);
-    // const clickFertilizerRef = React.useRef(false);
-    // const clickDiseaseRef = React.useRef(false);
+    const clickPlantRef = React.useRef(null);
+    const clickNurseryRef = React.useRef(null);
+    const clickFertilizerRef = React.useRef(null);
+    const clickDiseaseRef = React.useRef(null);
 
-    const services = [
-        {
-            title: 'Find Nursery',
-            description: 'Find the nearest nurseries around you!',
-            link: '/services/nursery',
-            refernce: clickNurseryRef
-        },
-        {
-            title: 'Search plant details',
-            description: 'View the details of your plant',
-            link: '/services/plantinfo',
-            refernce: clickPlantRef
-            // view: 'clickPlantRef.current.scrollIntoView({ behavior: "smooth" });'
-        },
-        {
-            title: 'Get amount of fertilizer',
-            description: 'See how much fertilizers your plant needs!',
-            link: '/services/fertilizer',
-            refernce: clickFertilizerRef
-        },
-        {
-            title: 'View Disease of Plant',
-            description: 'Don\'t know the disease of your plant? Click here!',
-            link: '/services/plantdisease',
-            refernce: clickDiseaseRef
+    const handleNurseryClick= () => {
+        setClickNursery(!clickNursery);
+        setClickPlant(false);
+        setClickDisease(false);
+        setClickFertilizer(false);
+        if(clickNursery){
+            console.log(clickNurseryRef.current);
+            clickNurseryRef.current.scrollIntoView({ behavior: "smooth" });
         }
-    ];
-
-    const handleServClick = (index) => {
-        console.log(index);
-        
     }
+
+    const handlePlantDetailsClick = () => {
+        setClickPlant(!clickPlant);
+        setClickDisease(false);
+        setClickNursery(false);
+        setClickFertilizer(false);
+        if(clickPlant){
+            clickPlantRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+    const handleFertilizerClick = () => {
+        setClickFertilizer(!clickFertilizer);
+        setClickPlant(false);
+        setClickNursery(false);
+        setClickDisease(false);
+        if(clickFertilizer){
+            clickFertilizerRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+    const handleDiseaseClick = () => {
+        setClickDisease(!clickDisease);
+        setClickPlant(false);
+        setClickNursery(false);
+        setClickFertilizer(false);
+        if(clickDisease){
+            clickDiseaseRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+
+
+    // const handleServClick = (index) => {
+    //     console.log(index);
+    //     if(index === 0){
+    //         return handleNurseryClick;
+    //     }
+    //     else if(index === 1){
+    //         return handlePlantClick;
+    //     }
+    //     else if(index === 2){
+    //         return handleFertilizerClick;
+    //     }
+    //     else if(index === 3){
+    //         return handlePesticideClick;
+    //     }
+
+    // }
+
+    // const handlePlantClick = () => {
+    //     setClickPlant(true);
+    //     setClickNursery(false);
+    //     setClickFertilizer(false);
+    //     setClickDisease(false);
+    // }
+
+    // const handleNurseryClick = () => {
+    //     setClickPlant(false);
+    //     setClickNursery(true);
+    //     setClickFertilizer(false);
+    //     setClickDisease(false);
+    // }
+
+    // const handleFertilizerClick = () => {
+    //     setClickPlant(false);
+    //     setClickNursery(false);
+    //     setClickFertilizer(true);
+    //     setClickDisease(false);
+    // }
+
+    // const handlePesticideClick = () => {
+    //     setClickPlant(false);
+    //     setClickNursery(false);
+    //     setClickFertilizer(false);
+    //     setClickDisease(true);
+    // }
+
+
 
     return (
         <div id='services-body'>
             <div className="container d-flex align-items-center justify-content-center">
                 <h1>Our Services</h1>
             </div>
-            <div className="row">
-                {services.map((service, index) => (
-                    // <Link to={service.link} className="col-sm-3 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200" key={index}>
-                    <Button className="col-sm-3 d-flex flex-column justify-content-center" id='card-btn' data-aos="fade-up" data-aos-delay="200" key={index} onClick={handleServClick(index)}>
+            <div className="row" id="servicelist">
+                <Button className="col-sm-3 d-flex flex-column justify-content-center" id='card-btn' data-aos="fade-up" data-aos-delay="200" onClick={handleNurseryClick}>
                         <div className="card" id='card-div'>
                             <div className="card-body">
-                                <h3 className="card-title">{service.title}</h3>
-                                <p className="card-text">{service.description}</p>
+                                <h3 className="card-title">Find Nursery</h3>
+                                <p className="card-text">'Find the nearest nurseries around you!'</p>
                             </div>
                         </div>
-                    </Button>
-                     // </Link>
-                ))}
+                </Button>
+                <Button className="col-sm-3 d-flex flex-column justify-content-center" id='card-btn' data-aos="fade-up" data-aos-delay="200" onClick={handlePlantDetailsClick}>
+                        <div className="card" id='card-div'>
+                            <div className="card-body">
+                                <h3 className="card-title">Search plant details</h3>
+                                <p className="card-text">View the details of your plant</p>
+                            </div>
+                        </div>
+                </Button>
+                <Button className="col-sm-3 d-flex flex-column justify-content-center" id='card-btn' data-aos="fade-up" data-aos-delay="200" onClick={handleFertilizerClick}>
+                        <div className="card" id='card-div'>
+                            <div className="card-body">
+                                <h3 className="card-title">Get amount of fertilizer</h3>
+                                <p className="card-text">See how much fertilizers your plant needs!</p>
+                            </div>
+                        </div>
+                </Button>
+                <Button className="col-sm-3 d-flex flex-column justify-content-center" id='card-btn' data-aos="fade-up" data-aos-delay="200" onClick={handleDiseaseClick}>
+                        <div className="card" id='card-div'>
+                            <div className="card-body">
+                                <h3 className="card-title">View Disease of Plant</h3>
+                                <p className="card-text">Don\'t know the disease of your plant? Click here!</p>
+                            </div>
+                        </div>
+                </Button>
             </div>
-            {
-                clickPlant &&
-                <div className="container d-flex align-items-center justify-content-center" ref={clickPlantRef}>
-                    <PlantDetails />
-                </div>
-            }
-            {
-                clickNursery &&
-                <div className="container d-flex align-items-center justify-content-center" ref={clickNurseryRef}>
-                    <h1>Find Nursery</h1>
-                </div>
-            }
-            {
-                clickFertilizer &&
-                <div className="container d-flex align-items-center justify-content-center" ref={clickFertilizerRef}>
-                    <h1>Get amount of fertilizer</h1>
-                    </div>
-            }
-
+          
+            <div id='popup-div'>
+                {clickNursery && <FindNursery/>}
+                {clickPlant && <PlantDetails/>}
+                {clickFertilizer && <Fertilizer/>}
+                {clickDisease && <ViewPlantDisease/>}
+            </div>
+            
         </div>
     )
 }
