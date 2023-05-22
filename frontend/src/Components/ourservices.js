@@ -1,4 +1,4 @@
-import '../CSSfiles/Homepage.css';
+import '../CSSfiles/service.css';
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import PlantDetails from '../pages/services/viewPlantDetails';
@@ -61,52 +61,6 @@ export default function OurServices(){
 
 
 
-    // const handleServClick = (index) => {
-    //     console.log(index);
-    //     if(index === 0){
-    //         return handleNurseryClick;
-    //     }
-    //     else if(index === 1){
-    //         return handlePlantClick;
-    //     }
-    //     else if(index === 2){
-    //         return handleFertilizerClick;
-    //     }
-    //     else if(index === 3){
-    //         return handlePesticideClick;
-    //     }
-
-    // }
-
-    // const handlePlantClick = () => {
-    //     setClickPlant(true);
-    //     setClickNursery(false);
-    //     setClickFertilizer(false);
-    //     setClickDisease(false);
-    // }
-
-    // const handleNurseryClick = () => {
-    //     setClickPlant(false);
-    //     setClickNursery(true);
-    //     setClickFertilizer(false);
-    //     setClickDisease(false);
-    // }
-
-    // const handleFertilizerClick = () => {
-    //     setClickPlant(false);
-    //     setClickNursery(false);
-    //     setClickFertilizer(true);
-    //     setClickDisease(false);
-    // }
-
-    // const handlePesticideClick = () => {
-    //     setClickPlant(false);
-    //     setClickNursery(false);
-    //     setClickFertilizer(false);
-    //     setClickDisease(true);
-    // }
-
-
 
     return (
         <div id='services-body'>
@@ -118,7 +72,7 @@ export default function OurServices(){
                         <div className="card" id='card-div'>
                             <div className="card-body">
                                 <h3 className="card-title">Find Nursery</h3>
-                                <p className="card-text">'Find the nearest nurseries around you!'</p>
+                                <p className="card-text">Find the nearest nurseries around you!</p>
                             </div>
                         </div>
                 </Button>
@@ -142,7 +96,7 @@ export default function OurServices(){
                         <div className="card" id='card-div'>
                             <div className="card-body">
                                 <h3 className="card-title">View Disease of Plant</h3>
-                                <p className="card-text">Don\'t know the disease of your plant? Click here!</p>
+                                <p className="card-text">Don't know the disease of your plant? Click here!</p>
                             </div>
                         </div>
                 </Button>

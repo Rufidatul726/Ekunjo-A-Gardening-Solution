@@ -1,0 +1,39 @@
+.profile-dashboard {
+    padding: 20px;
+    background: linear-gradient(rgba(77, 151, 103, 0.425),  rgba(135, 247, 174, 0.425), rgba(255, 255, 255, 0.5) );   
+  }
+  
+  .plant-list {
+    margin-top: 30px;
+  }
+  
+  .dashboard-components {
+    display: flex;
+    justify-content: space-between;
+    height: 30vh;
+    margin-top: 50px;
+    margin-bottom: 30px;
+  }
+  
+  .dashboard-component {
+    width: calc(33.33% - 8px);
+    /* background-color: #f2f2f2; */
+    padding: 20px;
+    border-radius: 4px;
+    background-color: transparent;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 30vh;
+  }
+
+  .dashboard-component:hover {
+    background-color: #f2f2f2;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  
+
+  .services{
+    margin-top: 20px;
+  }
+  

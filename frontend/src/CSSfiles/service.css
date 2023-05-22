@@ -1,0 +1,26 @@
+#card-whole-div{
+    background: linear-gradient(rgba(255, 255, 255, 0.5),  rgba(135, 247, 174, 0.425), rgba(77, 151, 103, 0.425));
+    width: 100%;
+    padding-top: 8%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+  
+  #card-div, #card-btn, Link, Button{
+    background-color: transparent;
+    color: black;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 30vh;
+  } 
+  
+  #card-div:hover{
+    background-color: rgba(16, 32, 18, 0.5);
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 30vh;
+  }
+  
+  a, Link{
+    text-decoration: none;
+    color: #344E41;
+  }

@@ -7,6 +7,8 @@ import GetFertilizerAmount from "./pages/services/getFertilizerAmount";
 import ViewPlantDisease from "./pages/services/viewPlantDisease";
 import Registration from "./pages/registration";
 import Login from "./pages/Login";
+import User from "./pages/dashboard/user";
+import Chat from "./pages/chatsystem/chat";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/services/fertilizer" element={<GetFertilizerAmount />} />
             <Route path="/services/plantinfo" element={<ViewPlantDetails />} />
             <Route path="/services/plantdisease" element={<ViewPlantDisease />} />
+            <Route path="/chat/:userName" element={<Chat/>} />
+            <Route path ="/user" element={<User/>} />
             <Route path="/register" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
           </Routes>

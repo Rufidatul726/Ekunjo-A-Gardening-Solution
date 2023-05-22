@@ -68,7 +68,7 @@ export default function Registration() {
             //     });
 
             if(password===confirmPassword && phone!==phoneEx && isValidPhoneNumber(phone)){
-                setSuccessMessage(true);
+                setSuccessMessage(!successMessage);
             }
             else{
                 setSuccessMessage(false);
@@ -144,15 +144,15 @@ export default function Registration() {
                             </div>
                         </div>
 
-                        <div class="form-check d-flex justify-content-center mb-5">
-                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                            <label class="form-check-label" for="form2Example3">
-                            I agree all statements in <a href="#!">Terms of service</a>
-                            </label>
-                        </div>
-
-                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-2">
-                            <button type="button" class="btn btn-primary btn-lg" onClick={handleSubmit}>Register</button>
+                        <div class="d-flex justify-content-center mx-4 mb-2 mb-sm-2">
+                            <button type="button" class="btn btn-outline btn-lg" onClick={handleSubmit}
+                                style={{
+                                    backgroundColor: "#fff", 
+                                    color: "#000", 
+                                    border: "none",
+                                    height: "50px",
+                                } }
+                            >Register</button>
                             </div>
                             </form>
                             {
@@ -180,7 +180,7 @@ export default function Registration() {
                             )
                         }
                         {/* <div className="text-center text-lg-start mt-4 pt-2"> */}
-                            <p className="small fw-bold mt-2 pt-1 mb-0">Already have an account? 
+                            <p className="small fw-bold mt-4 pt-1 mb-0">Already have an account? 
                                 <Link to="/login" className="link-danger">
                                 <span className="text-danger"> Log In</span>
                                 </Link>

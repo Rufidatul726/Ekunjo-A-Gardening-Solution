@@ -78,7 +78,14 @@ function Login() {
                 </div>
 
                 <div className="text-center text-lg-start mt-4 pt-2">
-                    <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}>Login</button>
+                    <button type="button" className="btn btn-primary btn-lg" onClick={handleSubmit}
+                        style={{
+                            backgroundColor: "#fff", 
+                            color: "#000", 
+                            border: "none",
+                            height: "50px",
+                        } }
+                    >Login</button>
                     <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
                         <Link to="/register" className="link-danger">
                         <span className="text-danger">Register</span>

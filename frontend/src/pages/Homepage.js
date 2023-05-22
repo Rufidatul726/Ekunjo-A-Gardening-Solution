@@ -26,32 +26,6 @@ export default function Homepage(){
                         </div>
                     </div>
                     </div>
-                    {/* <div className="container">
-                        <h5>Relative amounts (out of 100) of the essential nutrients required by most plants</h5>
-                        <div className="row">
-                            <div className="col-lg-7 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200" id='pie-div'>
-                            <PieChart className='pie-chart'
-                                data={[
-                                    { title: 'Carbon(C)', value: 45, color: '#344E41' },
-                                    { title: 'Oxygen(O)', value: 45, color: '#3A5A40' },
-                                    { title: 'Hydrozen', value: 6, color: '#588157' },
-                                    { title: 'Nitrogen', value: 1.7, color: '#A3B18A' },
-                                    { title: 'Potassiam(K)', value: 1.2, color: '#775253' },
-                                    { title: 'Phosphorus(P)', value: 0.7, color: '#351431' },
-                                ]}
-                                label={({ dataEntry }) => dataEntry.title +' '+ dataEntry.value + '%'}
-                                labelPosition={70}
-                                labelStyle={{
-                                    fontSize: '3.5px',
-                                    fontFamily: 'sans-serif',
-                                    fill: '#FFFFFF' 
-                                }}
-                                center={[50, 50]}
-
-                            />;
-                            </div>
-                        </div>
-                    </div> */}
                 </section>
                 <div id='card-whole-div'>
                     <OurServices/>
