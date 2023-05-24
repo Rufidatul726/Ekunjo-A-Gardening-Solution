@@ -71,7 +71,6 @@ export default function User() {
     }
 
 
-    if(isLoggedin){
         return (
             <div className="profile-dashboard d-flex flex-column align-items-center justify-content-center">
                 <h1>Welcome {user}</h1>
@@ -117,10 +116,5 @@ export default function User() {
                 </div>
             </div>
         );
-    }
-    else{
-        return(
-            <Navigate to='/login'/>
-        );
-    }   
+    
 }

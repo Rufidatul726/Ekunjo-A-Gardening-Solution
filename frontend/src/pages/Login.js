@@ -1,34 +1,40 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 // import axios from "axios";
 
-async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-}
+// async function loginUser(credentials) {
+//     return fetch('http://localhost:8080/login', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify(credentials)
+//     })
+//       .then(data => data.json())
+// }
 
 function Login({setToken}) {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const Navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        // const phoneNo = localStorage.getItem("phone");
+        // const passwordno = localStorage.getItem("password");
+            const phoneNo = "01234567890";
+            const passwordno = "1234567890";
         if (phone === phoneNo && password === passwordno) {
-            const token = await loginUser({phone, password});
-            setToken(token);
+            // const token = await loginUser({phone, password});
+            // setToken(token);
+            setToken = "1234567890";
             alert("Login Successful");
+            Navigate('/controller');
         }
         else {
-            alert("Login Failed");
+            alert("Invalid Credentials");
         }
 
         // try {

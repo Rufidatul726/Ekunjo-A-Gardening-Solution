@@ -1,6 +1,5 @@
 import React from 'react'
 import { useState } from 'react';
-import Mango from '../../images/mango.png'
 import MyCard from '../../Components/card';
 import '../../CSSfiles/viewPlantDetails.css'
 import axios from 'axios';
