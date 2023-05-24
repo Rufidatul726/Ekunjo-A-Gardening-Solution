@@ -3,11 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const passport = require("passport");
 
 //config files 
 require("./config/db");
-require("./config/passport")
 require("dotenv").config();
 
 //user model
@@ -21,11 +19,21 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({extended : true}));
 app.use(express.json());
-app.use(passport.initialize());
 
 //testing home route
 app.get("/", (req,res) => {
     res.send("sussy baka ekhane kisu nai")
+});
+
+
+//plant
+// const plantRouter = require('./routes/plant');
+// app.use('/', plantRouter);
+const Plant = require('./models/plant.model');
+app.get('/plants', async(req, res) => {
+    const result = await Plant.find({});
+    console.log(result);
+    res.json( result );
 });
 
 //register route
@@ -77,18 +85,18 @@ app.post("/login", async (req,res) =>{
 })
 
 //profile route
-app.get('/profile', passport.authenticate('jwt', { session: false }),
-    function(req, res) {
-        res.status(200).send({
-            message: "Tomar account", 
-            token: "Bearer "+token,
-            user: {
-                id: req.user._id,
-                phone: req.user.phone
-            }
-        }); 
-    }
-);
+// app.get('/profile', passport.authenticate('jwt', { session: false }),
+//     function(req, res) {
+//         res.status(200).send({
+//             message: "Tomar account", 
+//             token: "Bearer "+token,
+//             user: {
+//                 id: req.user._id,
+//                 phone: req.user.phone
+//             }
+//         }); 
+//     }
+// );
 
 //resource not found
 app.use((req,res,next) => {
