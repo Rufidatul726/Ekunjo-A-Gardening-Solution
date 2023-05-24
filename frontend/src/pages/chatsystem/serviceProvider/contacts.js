@@ -21,7 +21,6 @@ export default function Contacts({ contacts, changeChat }) {
 
   const changeCurrentChat = (index, contact) => {
     setCurrentSelected(index);
-    console.log(contact.chats[index].message);
     changeChat(contact);
   };
 
