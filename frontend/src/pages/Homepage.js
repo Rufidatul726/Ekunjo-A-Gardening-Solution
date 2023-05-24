@@ -5,7 +5,6 @@ import MyNavbar from '../Components/navbar';
 import OurServices from '../Components/ourservices';
 
 export default function Homepage(){
-    
     return (
         <div id='home-body'>
             <MyNavbar/>

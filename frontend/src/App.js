@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Homepage from "./pages/Homepage";
 import NurseryFinder from "./pages/services/nursery";
@@ -21,15 +22,21 @@ function App() {
             <Route path="/services/fertilizer" element={<GetFertilizerAmount />} />
             <Route path="/services/plantinfo" element={<ViewPlantDetails />} />
             <Route path="/services/plantdisease" element={<ViewPlantDisease />} />
-            <Route path ="/user" element={<User/>} />
+            if(isLoggedin && isServiceProvider){
+                 <Route path="/provideservice" element={<Chat/>} />
+            }
+            if(isLoggedin && isUser){
+              <Route path ="/user" element={<User/>} />
+            }
             <Route path="/register" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
-            <Route path="/provideservice" element={<Chat/>} />
+           
           </Routes>
         </Router>
       </header>
     </div>
   );
+
 }
 
 export default App;
