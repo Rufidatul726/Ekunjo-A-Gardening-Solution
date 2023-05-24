@@ -18,8 +18,6 @@ async function loginUser(credentials) {
 function Login({setToken}) {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const phoneNo = "01234567890";
-    const passwordno = "1234567890";
 
     const handleSubmit = async (e) => {
         e.preventDefault();

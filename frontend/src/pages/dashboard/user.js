@@ -11,17 +11,17 @@ export default function User() {
     const [clickService, setClickService] = react.useState(false);
     const [clickChat, setClickChat] = react.useState(false);
 
-    const [isLoggedin, setIsLoggedin] = react.useState(false);
+    // const [isLoggedin, setIsLoggedin] = react.useState(false);
 
-    useEffect (() => {
-        const token = localStorage.getItem(token);
-        if(token){
-            setIsLoggedin(!isLoggedin);
-        }
-        else{
-            Navigate('/login');
-        }
-    }, []);
+    // useEffect (() => {
+    //     const token = localStorage.getItem(token);
+    //     if(token){
+    //         setIsLoggedin(!isLoggedin);
+    //     }
+    //     else{
+    //         Navigate('/login');
+    //     }
+    // }, []);
 
     
     
