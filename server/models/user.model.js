@@ -12,7 +12,11 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         require: true
-    }
+    },
+    isExpert: {
+        type: Boolean,
+        default: false
+    },
 },
     { timestamp: true }
 );
