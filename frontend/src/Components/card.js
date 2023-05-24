@@ -1,9 +1,7 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from 'react';
 import ViewPlantDetails from '../pages/services/viewPlantDetails';
-import { Link } from 'react-router-dom';
 
 export default function MyCard({plantName, plantInfo}) {
   const [isRemoved, setIsRemoved] = useState(false);

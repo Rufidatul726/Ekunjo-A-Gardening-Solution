@@ -1,24 +1,33 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { PropTypes } from 'prop-types';
 // import axios from "axios";
 
-function Login() {
+async function loginUser(credentials) {
+    return fetch('http://localhost:8080/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+}
+
+function Login({setToken}) {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const phoneNo = "01234567890";
     const passwordno = "1234567890";
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(phone, password);
 
         if (phone === phoneNo && password === passwordno) {
-            
-            console.log("Login Successful");
+            const token = await loginUser({phone, password});
+            setToken(token);
             alert("Login Successful");
-            navigate("/");
         }
         else {
             alert("Login Failed");
@@ -58,23 +67,22 @@ function Login() {
                 <div className="form-outline mb-4">
                     <input type="tel" id="form3Example3" className="form-control form-control-lg"
                     placeholder="Enter a valid phone number" onChange={onPhoneChange}/>
-                    <label className="form-label" for="form3Example3">Phone Number</label>
+                    <label className="form-label" htmlFor="form3Example3">Phone Number</label>
                 </div>
 
                 <div className="form-outline mb-3">
                     <input type="password" id="form3Example4" className="form-control form-control-lg"
                     placeholder="Enter password" onChange={onPasswordChange}/>
-                    <label className="form-label" for="form3Example4">Password</label>
+                    <label className="form-label" htmlFor="form3Example4">Password</label>
                 </div>
 
                 <div className="d-flex justify-content-between align-items-center">
                     <div className="form-check mb-0">
                     <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                    <label className="form-check-label" for="form2Example3">
+                    <label className="form-check-label" htmlFor="form2Example3">
                         Remember me
                     </label>
                     </div>
-                    <a href="#!" className="text-body">Forgot password?</a>
                 </div>
 
                 <div className="text-center text-lg-start mt-4 pt-2">
@@ -88,7 +96,7 @@ function Login() {
                     >Login</button>
                     <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account? 
                         <Link to="/register" className="link-danger">
-                        <span className="text-danger">Register</span>
+                            <span className="text-danger">Register</span>
                         </Link>
                     </p>
                 </div>
@@ -102,3 +110,7 @@ function Login() {
 }
 
 export default Login;
+
+Login.prototypes = {
+    setToken: PropTypes.func.isRequired,
+}

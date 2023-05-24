@@ -27,8 +27,7 @@ export default function ViewPlantDetails(){
         filterContent(filter, searchItem);
     });
 
-    setShowComponent(true);
-    console.log(showComponent);
+    setShowComponent(!showComponent);
   };
 
   return(

@@ -7,6 +7,7 @@ import styled from "styled-components";
 import ChatContainer from "./chatContainer";
 import Contacts from "./contacts";
 import Welcome from "./welcome";
+import "../../../CSSfiles/chat.css";
 
 export default function Chat() {
 //   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function Chat() {
 
 useEffect(() => {
     setCurrentUser({
-        _id: "1000",
+        _id: "1",
         name: "Bonny Bae",
         avatar: "https://www.w3schools.com/howto/img_avatar.png",
         chats: [
@@ -62,6 +63,13 @@ useEffect(() => {
                 sender: "2",
                 receiver: "1",
                 message: "Hi",
+                createdAt: "2021-08-01T12:00:00.000Z",
+            },
+            {
+                _id: "3",
+                sender: "1",
+                receiver: "3",
+                message: "Welcome to E-kunjo",
                 createdAt: "2021-08-01T12:00:00.000Z",
             },
         ],
@@ -93,7 +101,7 @@ useEffect(() => {
         },
         {
             _id: "2",
-            name: "Jane Doe",
+            name: "John Doe",
             avatar: "https://www.w3schools.com/howto/img_avatar.png",
             chats: [
                 {
@@ -114,25 +122,25 @@ useEffect(() => {
         },
         {
             _id: "3",
-            name: "Javy Baez",
+            name: "Jane Doe",
             avatar: "https://www.w3schools.com/howto/img_avatar.png",
             chats: [
                 {
                     _id: "1",
                     sender: "1",
                     receiver: "2",
-                    message: "Welcome to the chat!",
+                    message: "Hello",
                     createdAt: "2021-08-01T12:00:00.000Z",
                 },
                 {
                     _id: "2",
                     sender: "2",
                     receiver: "1",
-                    message: "Hi",
+                    message: "How can I help you?",
                     createdAt: "2021-08-01T12:00:00.000Z",
                 },
             ],
-        }
+        },
     ]);
 }, [currentUser]);
 
@@ -150,7 +158,6 @@ useEffect(() => {
            <Welcome />
           ) : ( 
             <ChatContainer currentChat={currentChat}/>
-            // <ChatContainer currentChat={currentChat} socket={socket} />
         )} 
         </div>
       </Container>
@@ -158,6 +165,7 @@ useEffect(() => {
 }
 
 const Container = styled.div`
+    font: Playfair Display;
   height: 100vh;
   width: 100vw;
   display: flex;
