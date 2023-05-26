@@ -1,6 +1,7 @@
 .serviceProvider{
     background: linear-gradient(rgba(77, 151, 103, 0.425),  rgba(135, 247, 174, 0.425), rgba(255, 255, 255, 0.5) );
     height: 100vh;
+    max-height: 100vh;
     width: 100%;
     text-align: center;
     display: flex;
@@ -16,6 +17,15 @@
 
 .serviceProvider__left{
     width: 25%;
+}
+
+.user__middle{
+    width: 100%;
+    background-color:rgba(135, 247, 174, 0.425);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .serviceProvider__middle{

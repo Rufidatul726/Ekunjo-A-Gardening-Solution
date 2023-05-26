@@ -5,6 +5,8 @@ import userImage from '../../images/user.png';
 import sendImage from '../../images/send.png';
 
 export default function ServiceProvider(){
+    const [socket, setSocket] = useState(null);
+
     const contacts = [
         { name: "User6" , id: "6", phone: "1234567890", 
             message: [
@@ -31,6 +33,8 @@ export default function ServiceProvider(){
             ]
         },
         { name: "User4" , id: "4"},
+        { name: "User5" , id: "5"},
+        { name: "User5" , id: "5"},
         { name: "User5" , id: "5"},
     ];
 
@@ -79,6 +83,22 @@ export default function ServiceProvider(){
     //     setConversation(data);
     // };
 
+    // useEffect(() => {
+    //     setSocket(io("ws://localhost:5000"));
+    // }, [socket]);
+
+    // useEffect(() => {
+    //     socket?.emit("addUser", user.id);
+    //     socket?.on("getUsers", (users) => {
+    //         console.log(users);
+    //     });
+    //     socket?.on("getMessage", (data) => {
+    //         console.log(data);
+    //         setConversation((prev) => [...prev, data]);
+    //     }
+    //     );
+    // }, [socket, user]);
+
     const fetchmessage = () => {
         console.log("fetchmessage");
     };
@@ -90,7 +110,13 @@ export default function ServiceProvider(){
         setConversation([...conversation, { sender: user.id, receiver: "2", message: message }]);
         setMessage("");
 
-        
+        // socket?.emit("sendMessage", {
+        //     senderID: user.id,
+        //     receiverID: "2",
+        //     text: message,
+        //     conversationID: message?.receiver?._id,
+        // });
+
         // const res = await fetch("http://localhost:5000/api/messages", {
         //     method: "POST",
         //     headers: {
@@ -107,7 +133,7 @@ export default function ServiceProvider(){
     return(
       <div className='serviceProvider'>
         <div className='serviceProvider__container'>
-            <div className='serviceProvider__left'>
+            <div className='serviceProvider__left overflow-auto'>
                 <div className='flex justify-center items-center'>
                     <img src={userImage} alt='user' className='serviceProvider__image mt-3'/>
                     <div className='serviceProvider__left__name'>
@@ -118,7 +144,7 @@ export default function ServiceProvider(){
                 <hr/>
                 <div style={{marginLeft: "20px"}}>
                     <div className='text-start text-lg'>Messages </div>
-                    <div className='flex items-center text-start overflow-auto' style={{marginTop: "20px"}} >
+                    <div className='flex items-center text-start' style={{marginTop: "20px"}} >
                         {contacts.map((contacts) => (
                             <div className='cursor-pointer flex' onClick={fetchmessage}>
                                 <h3 className='text-lg font-bold'>{contacts.name}</h3>
@@ -132,9 +158,9 @@ export default function ServiceProvider(){
            
             <div className='serviceProvider__middle'>
                 <div className='serviceProvider__middle__container mt-3'>
-                    <img src={userImage} alt='user' className='serviceProvider__image ml-4'/>
-                    <div className='ml-8 '>
-                        <div className='serviceProvider__left__name mt-3'>
+                    <img src={userImage} alt='user' className='serviceProvider__image ml-4'/>                
+                    <div className='ml-14 mx-14'>
+                        <div className='serviceProvider__left__name mt-3 '>
                             <h3>User Name</h3>
                             <p>Online</p>
                         </div>
@@ -173,7 +199,7 @@ export default function ServiceProvider(){
                     <input type='text' placeholder='Type a message' className='serviceProvider__middle__container__input__box' 
                         value={message} onChange={(e) => setMessage(e.target.value)}
                     />
-                    <button type='submit' className='serviceProvider__middle__container__input__button' onClick={sendMessage}>
+                    <button type='submit' disabled={!message} className='serviceProvider__middle__container__input__button' onClick={sendMessage}>
                         <img src={sendImage} alt='send' height={30} width={30}/>
                     </button>
                 </div>
