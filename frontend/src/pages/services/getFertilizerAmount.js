@@ -3,28 +3,38 @@ import { useState } from 'react';
 import axios from 'axios';
 
 function GetFertilizerAmount(){   
-  const [plant, setPlant] = useState("");
-  const [number, setNumber] = useState(0);
+  const [plant, setPlant] = useState({});
+  const [filter, setFilter] = useState([]);
+  const [plantName, setPlantName] = useState("");
+  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [number, setNumber] = useState(0.0);
   const [showComponent, setShowComponent] = useState(false);
-    const [potassiam, setPotassiam] = useState(0);
-    const [nitrogen, setNitrogen] = useState(0);
-    const [phosphorus, setPhosphorus] = useState(0);
+  const [potassium, setPotassium] = useState(0.0);
+  const [nitrogen, setNitrogen] = useState(0.0);
+  const [phosphorus, setPhosphorus] = useState(0.0);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // const response = axios.post("http://localhost:9000/getFertilizerAmount",{plant,number,});
-    // const data = response.json();
-    // console.log(data);
+const handleSubmit = (e) => {
+  e.preventDefault();
+  axios.get(`http://localhost:5656/plants/${plantName}`).then((res) => {
+    const plantData = res.data;
+    setPlant(plantData);
+    console.log(plantData);
+    //setFilter(plantData);
 
-    // setPotassiam(data.potassiam);
-    // setNitrogen(data.nitrogen);
-    // setPhosphorus(data.phosphorus);
+    let k = plantData[0].K * number;
+    setPotassium(k);
+    let n = plantData[0].N * number;
+    setNitrogen(n);
+    let p = plantData[0].P * number;
+    setPhosphorus(p);
 
     setShowComponent(true);
-  }
+  });
+};
+
 
     const onPlantNameChange = (e) => {
-        setPlant(e.target.value);
+        setPlantName(e.target.value);
     };
 
     const onPlantNumberChange = (e) => {
@@ -67,7 +77,7 @@ function GetFertilizerAmount(){
                               <table className="table table-borderless text-black mb-0">
                                 <tbody>
                                   <tr>
-                                    <th scope="row">Potassiam : {potassiam}</th>
+                                    <th scope="row">potassium : {potassium}</th>
                                   </tr>
                                   <tr>
                                       <th scope="row">Nitrogen: {nitrogen}</th>

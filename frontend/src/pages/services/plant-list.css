@@ -1,0 +1,17 @@
+.plant-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.plant-title {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.plant-title.active {
+    background-color: #007bff;
+    color: #fff;
+}

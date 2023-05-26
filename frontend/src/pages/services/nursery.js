@@ -1,13 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import data from '../../jsonfiles/data.json';
-import '../../../node_modules/leaflet/dist/leaflet.css'
+import '../../../node_modules/leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
+import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import redMarker from '../../images/redMarker.png';
 import './styles.css';
 
 const FindNursery = () => {
+  const routingControlRef = useRef(null); // Ref to the routing control instance
+
   useEffect(() => {
     const mapOptions = {
       center: [23.385044, 90.486671],
@@ -17,11 +19,11 @@ const FindNursery = () => {
     const map = L.map('map', mapOptions);
     const tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      attribution: '&copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a>',
     });
 
     map.addLayer(tileLayer);
-    
+
     const googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
       maxZoom: 20,
       subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
@@ -37,8 +39,8 @@ const FindNursery = () => {
     });
 
     L.Marker.prototype.options.icon = L.icon({
-        iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png"
-      });
+      iconUrl: "https://unpkg.com/leaflet/dist/images/marker-icon.png",
+    });
 
     navigator.geolocation.getCurrentPosition((position) => {
       const userLat = position.coords.latitude;
@@ -53,6 +55,7 @@ const FindNursery = () => {
       setTimeout(() => {
         redMarker.closePopup();
       }, 5000);
+
       const userLatLng = L.latLng(userLat, userLong);
 
       data.forEach((nursery) => {
@@ -67,36 +70,54 @@ const FindNursery = () => {
       for (let i = 0; i < 5 && i < data.length; i++) {
         const nursery = data[i];
         const nurseryLatLng = L.latLng(nursery.LATITUDE, nursery.LONGITUDE);
-      
-        const marker = L.marker(nurseryLatLng, { icon: L.icon({ iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png", iconSize: [25, 41], iconAnchor: [12, 41], }) }).addTo(map);
+
+        const marker = L.marker(nurseryLatLng, {
+          icon: L.icon({
+            iconUrl: "https://unpkg.com/leaflet/dist/images/marker-icon.png",
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+          })
+        }).addTo(map);
+
         const color = colors[i % colors.length];
         marker.setIcon(L.icon({
           iconUrl: `https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
           iconSize: [25, 41],
           iconAnchor: [12, 41],
         }));
-        
+
         marker.bindPopup(`${nursery.NAME}<br>Distance: ${nursery.distance.toFixed(2)} meters`);
-        
-        const routingControl = L.Routing.control({
-          waypoints: [
-            L.latLng(position.coords.latitude, position.coords.longitude),
-            nurseryLatLng,
-          ],
-          lineOptions: {
-            styles: [{ color: color }]
-          },
-          show: false,
-          routeWhileDragging: true,
-          showAlternatives: false,
-          createMarker: function () {
-            return null;
-          },
+
+        marker.on('click', () => {
+          if (routingControlRef.current) {
+            routingControlRef.current.remove();
+            routingControlRef.current = null;
+          }
+
+          const routingControl = L.Routing.control({
+            waypoints: [
+              L.latLng(position.coords.latitude, position.coords.longitude),
+              nurseryLatLng,
+            ],
+            lineOptions: {
+              styles: [{ color: color }],
+            },
+            show: true,
+            routeWhileDragging: true,
+            showAlternatives: false,
+            createMarker: function () {
+              return null;
+            },
+          });
+
+          routingControl.addTo(map);
+          routingControlRef.current = routingControl;
+
+          // Focus on the route and zoom out a little bit
+          const route = routingControl.getPlan().getWaypoints();
+          map.fitBounds(L.latLngBounds([route[0].latLng, route[1].latLng]).pad(0.5));
         });
-      
-        routingControl.addTo(map);
       }
-      
     });
 
     return () => {
@@ -104,7 +125,7 @@ const FindNursery = () => {
     };
   }, []);
 
-  return <div id="map" style={{ height: '100vh'} } />;
+  return <div id="map" style={{ height: '100vh' }} />;
 };
 
 export default FindNursery;
