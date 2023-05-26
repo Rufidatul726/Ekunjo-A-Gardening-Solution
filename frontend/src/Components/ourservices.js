@@ -116,8 +116,12 @@ export default function OurServices(){
                 {clickPlant && 
                     <div ref={clickPlantRef}> <PlantDetails/> </div>
                 }
-                {clickFertilizer && <Fertilizer/>}
-                {clickDisease && <ViewPlantDisease/>}
+                {clickFertilizer && 
+                    <div ref={clickFertilizerRef}> <Fertilizer/> </div>
+                }
+                {clickDisease && 
+                    <div ref={clickDiseaseRef}> <ViewPlantDisease/> </div>
+                }
             </div>
             
         </div>

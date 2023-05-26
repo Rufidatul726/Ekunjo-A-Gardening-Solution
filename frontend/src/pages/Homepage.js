@@ -16,9 +16,7 @@ export default function Homepage(){
 
                     <div className="container">
                     <div className="row d-flex justify-content-center">
-                        <div className="col-lg-5 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center"
-                                id='carousel-div'
-                            >
+                        <div className="col-lg-5 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center" id='carousel-div'>
                                 <PictureCarousel/>
                         </div>
                         <div className="col-lg-6 d-flex flex-column align-items-center justify-content-center pt-4 pt-lg-0 order-2 order-lg-1" data-aos="fade-up" data-aos-delay="200" id='title-div'>
