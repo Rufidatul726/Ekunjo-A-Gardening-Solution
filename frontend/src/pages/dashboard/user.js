@@ -1,7 +1,7 @@
 import react, { useEffect } from 'react';
 import '../../CSSfiles/user.css';
 import OurServices from '../../Components/ourservices';
-import Chat from '../chatsystem/chat';
+import Chat from '../../Components/userchat';
 import { Navigate } from 'react-router-dom';
 
 export default function User() {
