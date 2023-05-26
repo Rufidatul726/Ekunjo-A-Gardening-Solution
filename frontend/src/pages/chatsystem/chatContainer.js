@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import ChatInput from "./chatInput";
+import User from "../../images/user.png";
 // import Logout from "./Logout";
 import { v4 as uuidv4 } from "uuid";
 // import axios from "axios";
@@ -10,6 +11,8 @@ export default function ChatContainer({ currentChat, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [conversations, setConversations] = useState([]);
+  //const [user, setUser] = useState(localStorage.getItem('userDetails'));
 
   useEffect(() => {
     setMessages([
@@ -20,38 +23,15 @@ export default function ChatContainer({ currentChat, socket }) {
     ]);
   }, [currentChat]);
 
-  // useEffect(async () => {
-  //   const data = await JSON.parse(
-  //     localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-  //   );
-  //   const response = await axios.post(recieveMessageRoute, {
-  //     from: data._id,
-  //     to: currentChat._id,
-  //   });
-  //   setMessages(response.data);
-  // }, [currentChat]);
-
   useEffect(() => {
-    // const getCurrentChat = async () => {
-    //   if (currentChat) {
-    //     await JSON.parse(
-    //       localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
-    //     )._id;
-    //   }
-    // };
-    // getCurrentChat();
+    
     const getCurrentChat = () => {
       if (currentChat) {
-        // return currentChat._id;
+        
         return "123";
       }
     };
-    // socket.current.emit("add-user", getCurrentChat());
 
-    // socket.current.on("msg-recieve", (msg) => {
-    //     setArrivalMessage({ fromSelf: false, message: msg });
-    //     }
-    // );
     const msgs = [...messages];
     msgs.push({ fromSelf: false, message: "Hello" });
     setMessages(msgs);
@@ -107,6 +87,7 @@ export default function ChatContainer({ currentChat, socket }) {
       <div className="chat-header">
         <div className="user-details">
           <div className="avatar">
+            <img src={User} alt="user" />
           </div>
           <div className="username">
             {/* <h3>{currentChat.username}</h3> */}

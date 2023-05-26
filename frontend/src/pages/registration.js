@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 // import axios from "axios";
 
 export default function Registration() {
@@ -10,6 +11,7 @@ export default function Registration() {
         const [errorMessage, setErrorMessage] = useState("");
         const [successMessage, setSuccessMessage] = useState(false);
         const phoneEx= "01234567890";
+        const Navigate = useNavigate();
 
         const handleSubmit = (e) => {
             e.preventDefault();
@@ -173,8 +175,9 @@ export default function Registration() {
                               >
                                 <h2>Registration Successful</h2>
                                 <p>Thank you for registering, {name}!</p>
-                                <button onClick={() => setSuccessMessage(false)}
-                                        style={{position: "absolute", top: "0", right: "0", padding: "0.5rem 1rem", border: "none", backgroundColor: "transparent", cursor: "pointer"}}
+                                <button onClick={() => Navigate("/login")}
+                                        style={{position: "absolute", top: "0", right: "0", padding: "0.2rem 1rem", 
+                                        height: "30px", border: "none", backgroundColor: "transparent", cursor: "pointer"}}
                                 >x</button>
                               </div>
                             )

@@ -7,6 +7,7 @@ import Registration from "./pages/registration";
 import Login from "./pages/Login";
 import User from "./pages/dashboard/user";
 import Chat from "./pages/chatsystem/serviceProvider/chat";
+import ServiceProvider from "./pages/dashboard/serviceprovider";
 // import Controller from "./pages/dashboard/controller";
 
 function ProtectedRoute({children}){
@@ -29,7 +30,7 @@ function RouteIsExpert({children}){
 
   if(!isExpert){
     console.log("redirecting");
-    return <Navigate to="/user" />;
+    return <Navigate to="/login" />;
   }
 
   else if(isExpert){
@@ -45,10 +46,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            {/* <PrivateRoute path="/user" element={<User />} />
-            <PrivateRoute path="/provideservice" element={<Chat />} /> */}
-            {/* <Route path="/provideservice" element={<Chat/> } />
-            <Route path ="/user" element={<User/>} /> */}
+            <Route path="/serviceprovider" element={<ServiceProvider/>} />
             <Route path="/user" element={<ProtectedRoute><User/></ProtectedRoute>} />
             <Route path="/provideservice" element={<ProtectedRoute><RouteIsExpert><Chat/></RouteIsExpert></ProtectedRoute>} />
             <Route path="/register" element={<Registration/>} />

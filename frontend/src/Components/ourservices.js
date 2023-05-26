@@ -102,9 +102,20 @@ export default function OurServices(){
                 </Button>
             </div>
           
-            <div id='popup-div'>
-                {clickNursery && <FindNursery/>}
-                {clickPlant && <PlantDetails/>}
+            <div id='popup-div'
+                style={{
+                    marginTop: "100px",
+                    marginBottom: "100px",
+                    paddingBottom: "100px",
+                }}>
+                {clickNursery && 
+                    <div ref={clickNurseryRef}>
+                        <FindNursery/>
+                    </div>
+                }
+                {clickPlant && 
+                    <div ref={clickPlantRef}> <PlantDetails/> </div>
+                }
                 {clickFertilizer && <Fertilizer/>}
                 {clickDisease && <ViewPlantDisease/>}
             </div>

@@ -29,13 +29,14 @@ export default function User() {
     const chatref = react.useRef(null);
 
     const handleServiceClick = () => {
+        setClickChat(false);
         setClickService(!clickService);
-        //serviceref.current.scrollIntoView({ behavior: "smooth" });
+        serviceref.current.scrollIntoView({ behavior: "smooth" });
     }
     
 
     react.useEffect(() => {
-        // const user = JSON.parse(localStorage.getItem('user'));
+        // const user = JSON.parse(localStorage.getItem('userDetails'));
         // setUser(user);
         setUser('Aurchey');
     }, []);
@@ -67,6 +68,7 @@ export default function User() {
 
     const handleChatClick = (event) => {
         setClickChat(!clickChat);
+        setClickService(false);
         chatref.current.scrollIntoView({ behavior: "smooth" });
     }
 

@@ -22,31 +22,33 @@ function Login({setToken}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // const phoneNo = localStorage.getItem("phone");
-        // const passwordno = localStorage.getItem("password");
-            const phoneNo = "01234567890";
-            const passwordno = "1234567890";
-        if (phone === phoneNo && password === passwordno) {
-            // const token = await loginUser({phone, password});
-            // setToken(token);
-            setToken = "1234567890";
-            alert("Login Successful");
-            Navigate('/controller');
-        }
-        else {
-            alert("Invalid Credentials");
-        }
+        
+        // const res = await fetch("http://localhost:9000/login", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //         phone,
+        //         password,
+        //     }),
+        // });
 
-        // try {
-        //     const response = await axios.post("http://localhost:9000/login",{phone,password,});
-        //     console.log(response);
-        //     setLoading(false);
-        //     setMessage(response.data.message);
-        // } catch (error) {
-        //     console.log(error);
-        //     setLoading(false);
-        //     setError(error.response.data.message);
+        //if(res.status === 400){
+        //    alert("Invalid Credentials");
+        //}
+        // else{
+        //     const data = await res.json();
+        //     console.log(data);
+        //     if(data.token ){
+        //         localStorage.setItem("token", data.token);
+        //         setToken(data.token);
+        //         localStorage.setItem("userDetails", JSON.stringify(data.userDetails));
+        //         data.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
+        //         data.isExpert ? Navigate('/provideservice') : Navigate('/user');
+        //     }
         // }
+
     };
 
     const onPhoneChange = (e) => {
