@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../CSSfiles/chat.css';
 import userImage from '../../images/user.png';
+import sendImage from '../../images/send.png';
 
 export default function ServiceProvider(){
     const contacts = [
@@ -72,7 +73,9 @@ export default function ServiceProvider(){
                 </div>
                 <div className='serviceProvider__middle__container__input'>
                     <input type='text' placeholder='Type a message' className='serviceProvider__middle__container__input__box'/>
-                    <button className='serviceProvider__middle__container__input__button'>Send</button>
+                    <button className='serviceProvider__middle__container__input__button'>
+                        <img src={sendImage} alt='send' height={30} width={30}/>
+                    </button>
                 </div>
             </div>
             <div className='serviceProvider__right'></div>
