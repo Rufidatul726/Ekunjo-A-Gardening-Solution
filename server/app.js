@@ -8,8 +8,10 @@ const bcrypt = require("bcrypt");
 require("./config/db");
 require("dotenv").config();
 
-//user model
+//models
 const User = require("./models/user.model");
+const Conversation = require("./models/conversation.model");
+const Message = require("./models/message.model");
 
 //encryption
 const saltRounds = 10;
@@ -25,16 +27,13 @@ app.get("/", (req,res) => {
     res.send("sussy baka ekhane kisu nai")
 });
 
+//plant details
+const plantRouter = require('./routes/plant');
+app.use('/plants', plantRouter);
 
-//plant
-// const plantRouter = require('./routes/plant');
-// app.use('/', plantRouter);
-const Plant = require('./models/plant.model');
-app.get('/plants', async(req, res) => {
-    const result = await Plant.find({});
-    console.log(result);
-    res.json( result );
-});
+//fertilizer
+// const fertilizerRouter = require('./routes/fertilizer');
+// app.use('/getFertilizerAmount', fertilizerRouter);
 
 //register route
 app.post("/register", async (req,res) =>{
@@ -65,38 +64,151 @@ app.post("/register", async (req,res) =>{
     }
 });
 
-//login route
-app.post("/login", async (req,res) =>{
-    const user = await User.findOne({phone : req.body.phone});
-    if(!user){
-        res.status(400).send("User not found!");
-    }
-    if(!bcrypt.compareSync(req.body.password, user.password)){
-        res.status(400).send("Incorrect password!");
-    }
 
-    const payload = {
-        id: user._id,
-        phone: user.phone
-    }
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: "2d"});
+//new login
+app.post('/login', async (req, res, next) => {
+    try {
+        const { phone, password } = req.body;
 
-    return  res.status(200).send({ success : true, message : "Log in successful", token : "Bearer "+token});
+        if (!phone || !password) {
+            res.status(400).send('Please fill all required fields');
+        } else {
+            const user = await User.findOne({ phone });
+            if (!user) {
+                res.status(400).send('User phone or password is incorrect');
+            } else {
+                const validateUser = await bcrypt.compare(password, user.password);
+                if (!validateUser) {
+                    res.status(400).send('User phone or password is incorrect');
+                } else {
+                    const payload = {
+                        userId: user._id,
+                        phone: user.phone
+                    }
+                    const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || 'PLACEHOLDER_SECRET_KEY';
+
+                    jwt.sign(payload, JWT_SECRET_KEY, { expiresIn: 84600 }, async (err, token) => {
+                        await User.updateOne({ _id: user._id }, {
+                            $set: { token }
+                        })
+                        user.save();
+                        return res.status(200).json({
+                            user: {
+                                id: user._id,
+                                phone: user.phone,
+                                username: user.username
+                            }, token: token
+                        })
+                    })
+                }
+            }
+        }
+
+    } catch (error) {
+        console.log(error, 'Error')
+    }
 })
 
-//profile route
-// app.get('/profile', passport.authenticate('jwt', { session: false }),
-//     function(req, res) {
-//         res.status(200).send({
-//             message: "Tomar account", 
-//             token: "Bearer "+token,
-//             user: {
-//                 id: req.user._id,
-//                 phone: req.user.phone
-//             }
-//         }); 
+//create a convo
+app.post('/conversation', async (req, res) => {
+  try {
+    const { senderId, receiverId } = req.body;
+    const newConversation = new Conversation({ members: [senderId, receiverId] });
+    await newConversation.save();
+    res.status(200).send('Conversation created successfully');
+  } catch (error) {
+    console.log(error, 'Error');
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+//get list of convo in which current user is involved
+// app.get('/conversation/:userId', async (req, res) => {
+//     try {
+//         const userId = req.params.userId;
+//         const conversations = await Conversation.find({ members: { $in: [userId] } });
+//         res.status(200).json(conversations);
+//     } catch (error) {
+//         console.log(error, 'Error')
 //     }
-// );
+// })
+
+app.get('/conversation/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const conversations = await Conversation.find({ members: { $in: [userId] } });
+        const conversationUserData = Promise.all(conversations.map(async (conversation) => {
+            const receiverId = conversation.members.find((member) => member !== userId);
+            const user = await User.findById(receiverId);
+            return {
+                user: {
+                    receiverId: user._id,
+                    phone: user.phone,
+                    username: user.username
+                }, conversationId: conversation._id
+            }
+        }))
+        res.status(200).json(await conversationUserData);
+    } catch (error) {
+        console.log(error, 'Error')
+    }
+})
+
+//send message
+app.post('/message', async (req, res) => {
+    try {
+        const { conversationId, senderId, message, receiverId = '' } = req.body;
+        if (!senderId || !message)
+            return res.status(400).send('Please fill all required fields')
+        if (conversationId === 'new' && receiverId) {
+            const newCoversation = new Conversation({ members: [senderId, receiverId] });
+            await newCoversation.save();
+            const newMessage = new Message({ conversationId: newCoversation._id, senderId, message });
+            await newMessage.save();
+            return res.status(200).send('Message sent successfully');
+        } else if (!conversationId && !receiverId) {
+            return res.status(400).send('Please fill all required fields')
+        }
+        const newMessage = new Message({ conversationId, senderId, message });
+        await newMessage.save();
+        res.status(200).send('Message sent successfully');
+    } catch (error) {
+        console.log(error, 'Error')
+    }
+})
+//get messages in a convo
+app.get('/message/:conversationId', async (req, res) => {
+    try {
+        const checkMessages = async (conversationId) => {
+            console.log(conversationId, 'conversationId')
+            const messages = await Message.find({ conversationId });
+            const messageUserData = Promise.all(messages.map(async (message) => {
+                const user = await User.findById(message.senderId);
+                return {
+                    user: {
+                        id: user._id,
+                        phone: user.phone,
+                        username: user.username
+                    }, message: message.message
+                }
+            }));
+            res.status(200).json(await messageUserData);
+        }
+        const conversationId = req.params.conversationId;
+        if (conversationId === 'new') {
+            const checkConversation = await Conversations.find({ members: { $all: [req.query.senderId, req.query.receiverId] } });
+            if (checkConversation.length > 0) {
+                checkMessages(checkConversation[0]._id);
+            } else {
+                return res.status(200).json([])
+            }
+        } else {
+            checkMessages(conversationId);
+        }
+    } catch (error) {
+        console.log('Error', error)
+    }
+})
 
 //resource not found
 app.use((req,res,next) => {
