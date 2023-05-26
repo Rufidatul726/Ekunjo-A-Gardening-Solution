@@ -6,11 +6,10 @@ import Homepage from "./pages/Homepage";
 import Registration from "./pages/registration";
 import Login from "./pages/Login";
 import User from "./pages/dashboard/user";
-import Chat from "./pages/chatsystem/serviceProvider/chat";
 import ServiceProvider from "./pages/dashboard/serviceprovider";
-// import Controller from "./pages/dashboard/controller";
+import SecretChat from "./Components/userchat";
 
-function ProtectedRoute({children}){
+function ProtectedRoute({children, isExpert=false}){
   //const isLoggedin = localStorage.getItem('token');
   const isLoggedin = true;
 
@@ -47,8 +46,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/serviceprovider" element={<ServiceProvider/>} />
+            <Route path="/secretchat" element={<SecretChat/>} />
             <Route path="/user" element={<ProtectedRoute><User/></ProtectedRoute>} />
-            <Route path="/provideservice" element={<ProtectedRoute><RouteIsExpert><Chat/></RouteIsExpert></ProtectedRoute>} />
+            {/* <Route path="/provideservice" element={<ProtectedRoute><RouteIsExpert><Chat/></RouteIsExpert></ProtectedRoute>} /> */}
             <Route path="/register" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
           </Routes>

@@ -10,7 +10,7 @@ export default function ViewPlantDetails(){
   const [filter, setFilterContent] = useState([]);
 
   function filterContent(plants, searchItem) {
-    // console.log(plants, searchItem);
+    //console.log(plants, searchItem);
     const result = plants.filter((plant) => plant.plantName.toLowerCase().includes(searchItem));
     console.log(result);
     setPlant(result);

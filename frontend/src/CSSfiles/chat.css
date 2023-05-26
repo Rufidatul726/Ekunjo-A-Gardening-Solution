@@ -16,11 +16,10 @@
 
 .serviceProvider__left{
     width: 25%;
-    height: 100vh;
 }
 
 .serviceProvider__middle{
-    width: 50%;
+    width: 75%;
     height: 100%;
     background-color:rgba(135, 247, 174, 0.425);
     display: flex;
