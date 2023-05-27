@@ -2,10 +2,9 @@ import react, { useEffect } from 'react';
 import '../../CSSfiles/user.css';
 import OurServices from '../../Components/ourservices';
 import Chat from '../../Components/userchat';
-import { Navigate } from 'react-router-dom';
 
 export default function User() {
-    const [user, setUser] = react.useState(null);
+    const [user, setUser] = react.useState({});
     const [plants, setPlants] = react.useState([]);
     const [newPlant, setNewPlant] = react.useState('');
     const [clickService, setClickService] = react.useState(false);
@@ -24,11 +23,19 @@ export default function User() {
     react.useEffect(() => {
         const user = JSON.parse(localStorage.getItem('userDetails'));
         setUser(user);
+        console.log(user);
     }, []);
 
     react.useEffect(() => {
         const plants = JSON.parse(localStorage.getItem('plants'));
         setPlants(plants);
+        // if(plants === null){
+        //     const temp = ['lily', 'rose', 'tulip'];
+        //     localStorage.setItem('plants', JSON.stringify(temp));
+        //     setPlants(temp);
+        //     console.log(plants);
+        //     console.log(plants.length);
+        // }
     }, []);
 
     const handlePlantClick = () => {
@@ -59,8 +66,8 @@ export default function User() {
 
         return (
             <div className="profile-dashboard d-flex flex-column align-items-center justify-content-center">
-                <h1>Welcome {user}</h1>
-                {plants.length > 0 && (
+                <h1>Welcome {user.username}</h1>
+                {plants.length > 0 ? 
                     <div className="plant-list">
                         <h2>Your plants are:</h2>
                         <ul>
@@ -69,7 +76,12 @@ export default function User() {
                             ))}
                         </ul>
                     </div>
-                )} 
+                 :
+                    <div className="dashboard-components text-align-center">
+                        You have no plants yet. Add a plant to get started.
+                    </div> 
+                
+                }
 
                 <div className="dashboard-components text-align-center">
                     <div className="dashboard-component btn btn-outline">
