@@ -4,15 +4,16 @@ import { redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Registration() {
-        const [name, setName] = useState("");
+        const [username, setUsername] = useState("");
         const [phone, setPhone] = useState("");
         const [password, setPassword] = useState("");
         const [confirmPassword, setConfirmPassword] = useState("");
         const [errorMessage, setErrorMessage] = useState("");
         const [successMessage, setSuccessMessage] = useState(false);
+        const phoneEx= "01234567890";
         const Navigate = useNavigate();
 
-        const handleSubmit = async(e) => {
+        const handleSubmit = (e) => {
             e.preventDefault();
 
             if(password !== confirmPassword){
@@ -22,30 +23,36 @@ export default function Registration() {
                 return;
             }
 
-            if(!isValidPhoneNumber(phone)){
-                setErrorMessage("Please enter a valid phone number.");
-                setPhone("");
-                return;
-            }
-
-            try{
-                const response = await axios.get("http://localhost:9000/users/register", {phone});
-                const data = response.json();
-                console.log(data);
-                if(data){
-                    setErrorMessage("Phone number already exists. Please try again.");
-                    setPhone("");
-                    return;
-                }
-
-            }catch(err){
-                console.log(err);
-
-            }
+            // if(!isValidPhoneNumber(phone)){
+            //     setErrorMessage("Please enter a valid phone number.");
+            //     setPhone("");
+            //     return;
+            // }
+            console.log("Name:", username);
+            console.log("Phone:", phone);
+            console.log("Password:", password);
+            console.log("Confirm Password:", confirmPassword);
             setErrorMessage("");
 
-                //Send data to backend
-            axios.post("http://localhost:9000/users/register", {name, phone, password})
+            //Check if phone number already exists
+            // try{
+            //     const response = await axios.get("http://localhost:5656/users/register", {phone});
+            //     const data = response.json();
+            //     console.log(data);
+            //     if(data){
+            //         setErrorMessage("Phone number already exists. Please try again.");
+            //         setPhone("");
+            //         return;
+            //     }
+
+            //     }catch(err){
+            //     console.log(err);
+            // }
+
+
+
+            //Send data to backend
+            axios.post("http://localhost:5656/register", {username, phone, password})
                 .then(res => {
                     console.log(res);
                     console.log(res.data);
@@ -54,7 +61,7 @@ export default function Registration() {
                     console.log(err);
                 });
 
-            if(password===confirmPassword && isValidPhoneNumber(phone)){
+            if(password===confirmPassword && phone!==phoneEx && isValidPhoneNumber(phone)){
                 setSuccessMessage(!successMessage);
             }
             else{
@@ -68,7 +75,7 @@ export default function Registration() {
         };
 
         const handleNameChange = (e) => {
-            setName(e.target.value);
+            setUsername(e.target.value);
         };
 
         const handlePhoneChange = (e) => {
@@ -159,7 +166,7 @@ export default function Registration() {
                                 }}
                               >
                                 <h2>Registration Successful</h2>
-                                <p>Thank you for registering, {name}!</p>
+                                <p>Thank you for registering, {username}!</p>
                                 <button onClick={() => Navigate("/login")}
                                         style={{position: "absolute", top: "0", right: "0", padding: "0.2rem 1rem", 
                                         height: "30px", border: "none", backgroundColor: "transparent", cursor: "pointer"}}
