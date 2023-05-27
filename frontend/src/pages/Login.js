@@ -2,8 +2,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { PropTypes } from 'prop-types';
-// import axios from "axios";
+import axios from "axios";
 
+//eita lagar kotha na
 // async function loginUser(credentials) {
 //     return fetch('http://localhost:8080/login', {
 //       method: 'POST',
@@ -23,31 +24,32 @@ function Login({setToken}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // const res = await fetch("http://localhost:9000/login", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //         phone,
-        //         password,
-        //     }),
-        // });
+        
+        const res = await fetch("http://localhost:5656/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                phone,
+                password,
+            }),
+        });
 
-        //if(res.status === 400){
-        //    alert("Invalid Credentials");
-        //}
-        // else{
-        //     const data = await res.json();
-        //     console.log(data);
-        //     if(data.token ){
-        //         localStorage.setItem("token", data.token);
-        //         setToken(data.token);
-        //         localStorage.setItem("userDetails", JSON.stringify(data.userDetails));
-        //         data.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
-        //         data.isExpert ? Navigate('/serviceprovider') : Navigate('/user');
-        //     }
-        // }
+        if(res.status === 400){
+           alert("Invalid Credentials");
+        }
+        else{
+            const data = await res.json();
+            console.log(data);
+            if(data.token ){
+                localStorage.setItem("token", data.token);
+                setToken(data.token);
+                localStorage.setItem("userDetails", JSON.stringify(data.userDetails));
+                data.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
+                data.isExpert ? Navigate('/provideservice') : Navigate('/user');
+            }
+        }
 
     };
 
