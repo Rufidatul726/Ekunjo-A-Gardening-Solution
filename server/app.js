@@ -31,9 +31,6 @@ app.get("/", (req,res) => {
 const plantRouter = require('./routes/plant');
 app.use('/plants', plantRouter);
 
-//fertilizer
-// const fertilizerRouter = require('./routes/fertilizer');
-// app.use('/getFertilizerAmount', fertilizerRouter);
 
 //register route
 app.post("/register", async (req,res) =>{

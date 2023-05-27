@@ -4,9 +4,7 @@ import axios from 'axios';
 
 function GetFertilizerAmount(){   
   const [plant, setPlant] = useState({});
-  const [filter, setFilter] = useState([]);
   const [plantName, setPlantName] = useState("");
-  const [selectedPlant, setSelectedPlant] = useState(null);
   const [number, setNumber] = useState(0.0);
   const [showComponent, setShowComponent] = useState(false);
   const [potassium, setPotassium] = useState(0.0);
