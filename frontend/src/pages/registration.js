@@ -167,13 +167,13 @@ export default function Registration() {
                               </div>
                             )
                         }
-                        {/* <div className="text-center text-lg-start mt-4 pt-2"> */}
-                            <p className="small fw-bold mt-4 pt-1 mb-0">Already have an account? 
+                        <div className="text-center text-lg-center pt-2 px-4">
+                            <p className="small fw-bold mt-4 pt-1 mb-0 ml-4">Already have an account? 
                                 <Link to="/login" className="link-danger">
                                 <span className="text-danger"> Log In</span>
                                 </Link>
                             </p>
-                        {/* </div>    */}
+                        </div>   
 
                     </div>
 
