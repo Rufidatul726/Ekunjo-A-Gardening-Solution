@@ -29,13 +29,13 @@ export default function User() {
     react.useEffect(() => {
         const plants = JSON.parse(localStorage.getItem('plants'));
         setPlants(plants);
-        // if(plants === null){
-        //     const temp = ['lily', 'rose', 'tulip'];
-        //     localStorage.setItem('plants', JSON.stringify(temp));
-        //     setPlants(temp);
-        //     console.log(plants);
-        //     console.log(plants.length);
-        // }
+        if(plants === null){
+            const temp = ['lily', 'rose', 'tulip'];
+            localStorage.setItem('plants', JSON.stringify(temp));
+            setPlants(temp);
+            console.log(plants);
+            console.log(plants.length);
+        }
     }, []);
 
     const handlePlantClick = () => {
