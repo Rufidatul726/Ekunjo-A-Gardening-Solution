@@ -45,7 +45,7 @@ function Login({setToken}) {
         //         setToken(data.token);
         //         localStorage.setItem("userDetails", JSON.stringify(data.userDetails));
         //         data.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
-        //         data.isExpert ? Navigate('/provideservice') : Navigate('/user');
+        //         data.isExpert ? Navigate('/serviceprovider') : Navigate('/user');
         //     }
         // }
 

@@ -10,7 +10,6 @@ export default function Registration() {
         const [confirmPassword, setConfirmPassword] = useState("");
         const [errorMessage, setErrorMessage] = useState("");
         const [successMessage, setSuccessMessage] = useState(false);
-        const phoneEx= "01234567890";
         const Navigate = useNavigate();
 
         const handleSubmit = (e) => {

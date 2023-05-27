@@ -11,17 +11,17 @@ export default function User() {
     const [clickService, setClickService] = react.useState(false);
     const [clickChat, setClickChat] = react.useState(false);
 
-    // const [isLoggedin, setIsLoggedin] = react.useState(false);
+    const [isLoggedin, setIsLoggedin] = react.useState(false);
 
-    // useEffect (() => {
-    //     const token = localStorage.getItem(token);
-    //     if(token){
-    //         setIsLoggedin(!isLoggedin);
-    //     }
-    //     else{
-    //         Navigate('/login');
-    //     }
-    // }, []);
+    useEffect (() => {
+        const token = localStorage.getItem(token);
+        if(token){
+            setIsLoggedin(!isLoggedin);
+        }
+        else{
+            Navigate('/login');
+        }
+    }, []);
 
     
     
@@ -36,28 +36,26 @@ export default function User() {
     
 
     react.useEffect(() => {
-        // const user = JSON.parse(localStorage.getItem('userDetails'));
-        // setUser(user);
-        setUser('Aurchey');
+        const user = JSON.parse(localStorage.getItem('userDetails'));
+        setUser(user);
     }, []);
 
     react.useEffect(() => {
-        // const plants = JSON.parse(localStorage.getItem('plants'));
-        // setPlants(plants);
-        setPlants(['Aloe Vera', 'Basil','Rosemary']);
+        const plants = JSON.parse(localStorage.getItem('plants'));
+        setPlants(plants);
     }, []);
 
-    // const handlePlantClick = () => {
-    //     const newPlant = prompt('Enter plant name');
-    //     const newPlants = [...plants, newPlant];
-    //     // localStorage.setItem('plants', JSON.stringify(newPlants));
-    //     setPlants(newPlants);
-    // }
+    const handlePlantClick = () => {
+        const newPlant = prompt('Enter plant name');
+        const newPlants = [...plants, newPlant];
+        localStorage.setItem('plants', JSON.stringify(newPlants));
+        setPlants(newPlants);
+    }
 
     const handlePlantSubmit = (event) => {
         event.preventDefault();
         const newPlants = [...plants, newPlant];
-        // localStorage.setItem('plants', JSON.stringify(newPlants));
+        ocalStorage.setItem('plants', JSON.stringify(newPlants));
         setPlants(newPlants);
         setNewPlant('');
     }

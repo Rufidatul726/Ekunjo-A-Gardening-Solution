@@ -7,54 +7,9 @@ import sendImage from '../../images/send.png';
 export default function ServiceProvider(){
     const [socket, setSocket] = useState(null);
 
-    const contacts = [
-        { name: "User6" , id: "6", phone: "1234567890", 
-            message: [
-                { sender: "1", receiver: "6", message: "Hello" },
-                { sender: "6", receiver: "1", message: "Hi" },
-                { sender: "1", receiver: "6", message: "How are you?" },
-                { sender: "6", receiver: "1", message: "I'm fine" },
-            ]
-        },
-        { name: "User2" , id: "2", phone: "12345678290",
-            message: [
-                { sender: "1", receiver: "2", message: "Welcome" },
-                { sender: "2", receiver: "1", message: "To" },
-                { sender: "1", receiver: "2", message: "Ekunjo" },
-                { sender: "2", receiver: "1", message: "Support" },
-            ]
-        },
-        { name: "User3" , id: "3", phone: "1232867890",
-            message: [
-                { sender: "1", receiver: "3", message: "Hello" },
-                { sender: "3", receiver: "1", message: "Hi" },
-                { sender: "1", receiver: "3", message: "How are you?" },
-                { sender: "3", receiver: "1", message: "I'm fine" },
-            ]
-        },
-        { name: "User4" , id: "4"},
-        { name: "User5" , id: "5"},
-        { name: "User5" , id: "5"},
-        { name: "User5" , id: "5"},
-    ];
-
-    //const [user, setUser] = useState("JSON.parse(localStorage.getItem('userDetails'))");
+    const [user, setUser] = useState("JSON.parse(localStorage.getItem('userDetails'))");
     const [message, setMessage] = useState("");
-    const [conversation, setConversation] = useState(
-        [
-            { sender: "1", receiver: "2", message: "Hello" },
-            { sender: "2", receiver: "1", message: "Hi" },
-            { sender: "1", receiver: "2", message: "How are you?" },
-            { sender: "2", receiver: "1", message: "I'm fine" }
-        ]
-    );
-    const [user, setUser] = useState(
-        {
-            name: "User Name",
-            id: "1",
-            phone: "1234567890",
-        }
-    );
+    const [conversation, setConversation] = useState([]);
 
     // useEffect(() => {
     //     const logginUser = JSON.parse(localStorage.getItem("userDetails"));

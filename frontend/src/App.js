@@ -7,34 +7,32 @@ import Registration from "./pages/registration";
 import Login from "./pages/Login";
 import User from "./pages/dashboard/user";
 import ServiceProvider from "./pages/dashboard/serviceprovider";
-import SecretChat from "./Components/userchat";
 
 function ProtectedRoute({children, isExpert=false}){
-  //const isLoggedin = localStorage.getItem('token');
-  const isLoggedin = true;
+  const isLoggedin = localStorage.getItem('token');
 
   if(!isLoggedin){
     console.log("redirecting");
     return <Navigate to="/login" />;
   }
 
-  else if(isLoggedin){
+  else if(isLoggedin && !isExpert){
+    console.log("logged in");
     return children;
   }
-}
 
-function RouteIsExpert({children}){
-  const isExpert = localStorage.getItem('isExpert');
-  //const isExpert = true;
-
-  if(!isExpert){
-    console.log("redirecting");
-    return <Navigate to="/login" />;
+  else if(isLoggedin && isExpert){
+    const isExpert = localStorage.getItem('isExpert');
+    if(isExpert === "true"){
+      console.log("logged in");
+      return children;
+    }
+    else{
+      console.log("redirecting");
+      return <Navigate to="/user" />;
+    }
   }
 
-  else if(isExpert){
-    return children;
-  }
 }
 
 
@@ -45,10 +43,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/serviceprovider" element={<ServiceProvider/>} />
-            <Route path="/secretchat" element={<SecretChat/>} />
             <Route path="/user" element={<ProtectedRoute><User/></ProtectedRoute>} />
-            {/* <Route path="/provideservice" element={<ProtectedRoute><RouteIsExpert><Chat/></RouteIsExpert></ProtectedRoute>} /> */}
+            <Route path="/serviceprovider" element={<ProtectedRoute isExpert={true}><ServiceProvider/></ProtectedRoute>} />
             <Route path="/register" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
           </Routes>
