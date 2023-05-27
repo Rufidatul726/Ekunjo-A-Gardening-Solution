@@ -55,7 +55,7 @@ export default function User() {
     const handlePlantSubmit = (event) => {
         event.preventDefault();
         const newPlants = [...plants, newPlant];
-        ocalStorage.setItem('plants', JSON.stringify(newPlants));
+        localStorage.setItem('plants', JSON.stringify(newPlants));
         setPlants(newPlants);
         setNewPlant('');
     }

@@ -31,16 +31,13 @@ export default function UserChat(){
                 "Content-Type": "application/json",
             },
         });
-        body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
+        body: JSON.stringify({  });
+        // body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
         const data = await res.json();
         setConversation(data);
     };
 
-    const fetchmessage = () => {
-        console.log("fetchmessage");
-    };
-
-    const sendMessage = (e) => {
+    const sendMessage = async(e) => {
         e.preventDefault();
         console.log("sendMessage");
         console.log(message);
@@ -53,7 +50,8 @@ export default function UserChat(){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ conversationID, senderID, message, receiverID }),
+            body: JSON.stringify({ }),
+            // body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID }),
         });
         const data = await res.json();
         setConversation([...conversation, data]);

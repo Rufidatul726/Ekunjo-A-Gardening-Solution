@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { redirect, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 export default function Registration() {
         const [name, setName] = useState("");
@@ -12,7 +12,7 @@ export default function Registration() {
         const [successMessage, setSuccessMessage] = useState(false);
         const Navigate = useNavigate();
 
-        const handleSubmit = (e) => {
+        const handleSubmit = async(e) => {
             e.preventDefault();
 
             if(password !== confirmPassword){
@@ -28,47 +28,33 @@ export default function Registration() {
                 return;
             }
 
-            if(phone === phoneEx){
-                setErrorMessage("Phone number already exists. Please try again.");
-                setPhone("");
-                setSuccessMessage(false);
-                return;
-            }
+            try{
+                const response = await axios.get("http://localhost:9000/users/register", {phone});
+                const data = response.json();
+                console.log(data);
+                if(data){
+                    setErrorMessage("Phone number already exists. Please try again.");
+                    setPhone("");
+                    return;
+                }
 
-            console.log("Name:", name);
-            console.log("Phone:", phone);
-            console.log("Password:", password);
-            console.log("Confirm Password:", confirmPassword);
+            }catch(err){
+                console.log(err);
+
+            }
             setErrorMessage("");
 
-                //Check if phone number already exists
-            // try{
-            //     const response = await axios.get("http://localhost:9000/users/register", {phone});
-            //     const data = response.json();
-            //     console.log(data);
-            //     if(data){
-            //         setErrorMessage("Phone number already exists. Please try again.");
-            //         setPhone("");
-            //         return;
-            //     }
-
-            //     }catch(err){
-            //     console.log(err);
-            // }
-
-
-
                 //Send data to backend
-            // axios.post("http://localhost:9000/users/register", {name, phone, password})
-            //     .then(res => {
-            //         console.log(res);
-            //         console.log(res.data);
-            //     })
-            //     .catch(err => {
-            //         console.log(err);
-            //     });
+            axios.post("http://localhost:9000/users/register", {name, phone, password})
+                .then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
 
-            if(password===confirmPassword && phone!==phoneEx && isValidPhoneNumber(phone)){
+            if(password===confirmPassword && isValidPhoneNumber(phone)){
                 setSuccessMessage(!successMessage);
             }
             else{

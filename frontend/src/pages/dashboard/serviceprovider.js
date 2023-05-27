@@ -1,87 +1,86 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { io } from 'socket.io-client';
 import '../../CSSfiles/chat.css';
 import userImage from '../../images/user.png';
 import sendImage from '../../images/send.png';
 
 export default function ServiceProvider(){
     const [socket, setSocket] = useState(null);
-
+    const [contacts, setContacts] = useState([]);
     const [user, setUser] = useState("JSON.parse(localStorage.getItem('userDetails'))");
     const [message, setMessage] = useState("");
     const [conversation, setConversation] = useState([]);
 
-    // useEffect(() => {
-    //     const logginUser = JSON.parse(localStorage.getItem("userDetails"));
-    //     const fetchConversations = async (conversationID) => {
-    //         const res = await fetch("http://localhost:5000/api/conversations/${logginUser.id}", {
-    //             method: "GET",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //         });
-    //         const data = await res.json();
-    //         setConversation(data);
-    //     };
-    //     fetchConversations();
-    // }, []);
+    useEffect(() => {
+        const logginUser = JSON.parse(localStorage.getItem("userDetails"));
+        const fetchConversations = async (conversationID) => {
+            const res = await fetch("http://localhost:5000/api/conversations/${logginUser.id}", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            setConversation(data);
+        };
+        fetchConversations();
+    }, []);
 
-    // const fetchmessage = async (conversationID) => {
-    //     const res = await fetch("http://localhost:5000/api/messages/${conversationID}", {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //     });
-    //     body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
-    //     const data = await res.json();
-    //     setConversation(data);
-    // };
-
-    // useEffect(() => {
-    //     setSocket(io("ws://localhost:5000"));
-    // }, [socket]);
-
-    // useEffect(() => {
-    //     socket?.emit("addUser", user.id);
-    //     socket?.on("getUsers", (users) => {
-    //         console.log(users);
-    //     });
-    //     socket?.on("getMessage", (data) => {
-    //         console.log(data);
-    //         setConversation((prev) => [...prev, data]);
-    //     }
-    //     );
-    // }, [socket, user]);
-
-    const fetchmessage = () => {
-        console.log("fetchmessage");
+    const fetchmessage = async (conversationID) => {
+        const res = await fetch("http://localhost:5000/api/messages/${conversationID}", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        body: JSON.stringify({ });
+        //body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
+        const data = await res.json();
+        setConversation(data);
     };
 
-    const sendMessage = (e) => {
+    useEffect(() => {
+        setSocket(io("ws://localhost:5000"));
+    }, [socket]);
+
+    useEffect(() => {
+        socket?.emit("addUser", user.id);
+        socket?.on("getUsers", (users) => {
+            console.log(users);
+        });
+        socket?.on("getMessage", (data) => {
+            console.log(data);
+            setConversation((prev) => [...prev, data]);
+        }
+        );
+    }, [socket, user]);
+
+    const sendMessage = async(e) => {
         e.preventDefault();
         console.log("sendMessage");
         console.log(message);
         setConversation([...conversation, { sender: user.id, receiver: "2", message: message }]);
         setMessage("");
 
-        // socket?.emit("sendMessage", {
-        //     senderID: user.id,
-        //     receiverID: "2",
-        //     text: message,
-        //     conversationID: message?.receiver?._id,
-        // });
+        socket?.emit("sendMessage", {
+            senderID: user.id,
+            receiverID: "2",
+            text: message,
+            conversationID: message?.receiver?._id,
+        });
 
-        // const res = await fetch("http://localhost:5000/api/messages", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({ conversationID, senderID, message, receiverID }),
-        // });
-        // const data = await res.json();
-        // setConversation([...conversation, data]);
-        // e.target.elements.message.value = "";
+        const res = await fetch("http://localhost:5000/api/messages", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ }),
+            // body: JSON.stringify({ conversationID, senderID, message, receiverID }),
+        });
+        const data = await res.json();
+        setConversation([...conversation, data]);
+        e.target.elements.message.value = "";
     };
 
 
