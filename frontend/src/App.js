@@ -9,7 +9,7 @@ import User from "./pages/dashboard/user";
 import ServiceProvider from "./pages/dashboard/serviceprovider";
 
 function ProtectedRoute({children, isExpert=false}){
-  const isLoggedin = localStorage.getItem('token');
+  const isLoggedin = localStorage.getItem('token') !== null || false;
 
   if(!isLoggedin){
     console.log("redirecting");
@@ -21,17 +21,7 @@ function ProtectedRoute({children, isExpert=false}){
     return children;
   }
 
-  else if(isLoggedin && isExpert){
-    const isExpert = localStorage.getItem('isExpert');
-    if(isExpert === "true"){
-      console.log("logged in");
-      return children;
-    }
-    else{
-      console.log("redirecting");
-      return <Navigate to="/user" />;
-    }
-  }
+  return children;
 
 }
 

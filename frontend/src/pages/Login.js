@@ -16,7 +16,7 @@ import axios from "axios";
 //       .then(data => data.json())
 // }
 
-function Login({setToken}) {
+function Login() {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const Navigate = useNavigate();
@@ -44,10 +44,9 @@ function Login({setToken}) {
             console.log(data);
             if(data.token ){
                 localStorage.setItem("token", data.token);
-                setToken(data.token);
-                localStorage.setItem("userDetails", JSON.stringify(data.userDetails));
-                data.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
-                data.isExpert ? Navigate('/provideservice') : Navigate('/user');
+                localStorage.setItem("userDetails", JSON.stringify(data.user));
+                data.user.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
+                data.user.isExpert ? Navigate('/serviceprovider') : Navigate('/user');
             }
         }
 
@@ -110,7 +109,3 @@ function Login({setToken}) {
 }
 
 export default Login;
-
-Login.prototypes = {
-    setToken: PropTypes.func.isRequired,
-}

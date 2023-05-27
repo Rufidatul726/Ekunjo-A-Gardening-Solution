@@ -93,7 +93,8 @@ app.post('/login', async (req, res, next) => {
                             user: {
                                 id: user._id,
                                 phone: user.phone,
-                                username: user.username
+                                username: user.username,
+                                isExpert: user.isExpert
                             }, token: token
                         })
                     })

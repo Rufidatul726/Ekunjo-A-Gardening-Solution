@@ -10,19 +10,6 @@ export default function User() {
     const [newPlant, setNewPlant] = react.useState('');
     const [clickService, setClickService] = react.useState(false);
     const [clickChat, setClickChat] = react.useState(false);
-
-    const [isLoggedin, setIsLoggedin] = react.useState(false);
-
-    useEffect (() => {
-        const token = localStorage.getItem(token);
-        if(token){
-            setIsLoggedin(!isLoggedin);
-        }
-        else{
-            Navigate('/login');
-        }
-    }, []);
-
     
     
     const serviceref = react.useRef(null);
@@ -32,8 +19,7 @@ export default function User() {
         setClickChat(false);
         setClickService(!clickService);
         serviceref.current.scrollIntoView({ behavior: "smooth" });
-    }
-    
+    } 
 
     react.useEffect(() => {
         const user = JSON.parse(localStorage.getItem('userDetails'));
@@ -74,7 +60,6 @@ export default function User() {
         return (
             <div className="profile-dashboard d-flex flex-column align-items-center justify-content-center">
                 <h1>Welcome {user}</h1>
-
                 {plants.length > 0 && (
                     <div className="plant-list">
                         <h2>Your plants are:</h2>
@@ -84,7 +69,7 @@ export default function User() {
                             ))}
                         </ul>
                     </div>
-                )}
+                )} 
 
                 <div className="dashboard-components text-align-center">
                     <div className="dashboard-component btn btn-outline">
