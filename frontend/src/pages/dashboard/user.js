@@ -33,8 +33,6 @@ export default function User() {
             const temp = ['lily', 'rose', 'tulip'];
             localStorage.setItem('plants', JSON.stringify(temp));
             setPlants(temp);
-            console.log(plants);
-            console.log(plants.length);
         }
     }, []);
 
@@ -67,12 +65,12 @@ export default function User() {
         return (
             <div className="profile-dashboard d-flex flex-column align-items-center justify-content-center">
                 <h1>Welcome {user.username}</h1>
-                {plants.length > 0 ? 
+                {plants.length > 3 ? 
                     <div className="plant-list">
                         <h2>Your plants are:</h2>
                         <ul>
                             {plants.map((plant, index) => (
-                                <li key={index}>{plant}</li>
+                               index > 3 &&  <li key={index}>{plant}</li>
                             ))}
                         </ul>
                     </div>
