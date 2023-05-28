@@ -12,13 +12,12 @@ export default function UserChat(){
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("userDetails"));
         setUser(user);
-        console.log(user);
     }, []);
 
     useEffect(() => {
         const logginUser = JSON.parse(localStorage.getItem("userDetails"));
         const fetchConversations = async (conversationID) => {
-            const res = await fetch("http://localhost:5656/api/conversations/${logginUser.id}", {
+            const res = await fetch("http://localhost:5656/conversation/${logginUser.id}", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,29 +36,32 @@ export default function UserChat(){
                 "Content-Type": "application/json",
             },
         });
-        body: JSON.stringify({  });
-        // body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
+        //body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
         const data = await res.json();
         setConversation(data);
     };
 
     const sendMessage = async(e) => {
         e.preventDefault();
-        console.log(message);
-        setConversation([...conversation, { sender: user.id, receiver: " ", message: message }]);
+        setConversation([...conversation, { sender: user.id, message: message, receiverID:' ' }]);
+        const receiverID = ' ';
+        const conversationID = 'new';
         setMessage("");
-
+        if(conversation.length !== 0){
+            const receiverID = conversation[0].sender;
+            const conversationID = conversation[0].conversationID;
+        }
         
-        const res = await fetch("http://localhost:5656/api/messages", {
+        const res = await fetch("http://localhost:5656/messages", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ }),
-            // body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID }),
+            body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID }),
         });
         const data = await res.json();
         setConversation([...conversation, data]);
+        console.log(conversation);
         e.target.elements.message.value = "";
     };
 
