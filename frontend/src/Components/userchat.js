@@ -1,13 +1,27 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { io } from 'socket.io-client';
 import '../CSSfiles/chat.css';
 import userImage from '../images/user.png';
 import sendImage from '../images/send.png';
 
 export default function UserChat(){
     const [message, setMessage] = useState("");
+    const [socket, setSocket] = useState(null);
     const [conversation, setConversation] = useState([]);
     const [user, setUser] = useState({});
+    const [receiverId, setReceiverId] = useState("");
+
+    useEffect(() => {
+        const newSocket = io("ws://localhost:4545");
+        setSocket(newSocket);
+    }, []);
+
+    useEffect(() => {
+        socket?.on("getMessage", (data) => {
+            setConversation((prev) => [...prev, data]);
+        });
+    }, [socket]);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("userDetails"));
@@ -15,9 +29,26 @@ export default function UserChat(){
     }, []);
 
     useEffect(() => {
+        const fetchreceiver = async () => {
+            const res = await fetch('http://localhost:5656/user', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            const object = data[0].user;
+            const receiverID = object.receiverId;
+            setReceiverId(receiverID);
+        };
+
+        fetchreceiver();
+    }, []);
+
+    useEffect(() => {
         const logginUser = JSON.parse(localStorage.getItem("userDetails"));
         const fetchConversations = async (conversationID) => {
-            const res = await fetch("http://localhost:5656/conversation/${logginUser.id}", {
+            const res = await fetch('http://localhost:5656/conversation/${logginUser.id}', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -29,41 +60,34 @@ export default function UserChat(){
         fetchConversations();
     }, []);
 
-    const fetchmessage = async (conversationID) => {
-        const res = await fetch("http://localhost:5656/api/messages/${conversationID}", {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        //body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
-        const data = await res.json();
-        setConversation(data);
-    };
-
     const sendMessage = async(e) => {
         e.preventDefault();
-        setConversation([...conversation, { sender: user.id, message: message, receiverID:' ' }]);
-        const receiverID = ' ';
-        const conversationID = 'new';
-        setMessage("");
-        if(conversation.length !== 0){
-            const receiverID = conversation[0].sender;
-            const conversationID = conversation[0].conversationID;
-        }
-        
-        const res = await fetch("http://localhost:5656/messages", {
+
+        const senderId = user.id;
+        const conversationId = 'new';
+
+        socket.emit("sendMessage", {
+            senderId,
+            receiverId,
+            message,
+        });
+
+        const res = await fetch('http://localhost:5656/message', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID }),
+            body: JSON.stringify({ conversationId, senderId, message, receiverId }),
         });
         const data = await res.json();
+        console.log(data);
         setConversation([...conversation, data]);
         console.log(conversation);
-        e.target.elements.message.value = "";
+        setMessage("");
     };
+
+
+    
 
 
     return(

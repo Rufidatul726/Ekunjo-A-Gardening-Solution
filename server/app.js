@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const io = require('socket.io')(4545, {
     cors: {
         origin: 'http://localhost:3000',
+        credentials: true,
     }
 });
 
@@ -170,6 +171,7 @@ app.post('/conversation', async (req, res) => {
     const { senderId, receiverId } = req.body;
     const newConversation = new Conversation({ members: [senderId, receiverId] });
     await newConversation.save();
+    console.log(newConversation, 'newConversation');
     res.status(200).send('Conversation created successfully');
   } catch (error) {
     console.log(error, 'Error');
@@ -181,6 +183,7 @@ app.post('/conversation', async (req, res) => {
 app.get('/conversation/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
+        console.log(userId, 'userId');
         const conversations = await Conversation.find({ members: { $in: [userId] } });
         const conversationUserData = Promise.all(conversations.map(async (conversation) => {
             const receiverId = conversation.members.find((member) => member !== userId);
@@ -202,7 +205,7 @@ app.get('/conversation/:userId', async (req, res) => {
 //send message
 app.post('/message', async (req, res) => {
     try {
-        const { conversationId, senderId, message, receiverId = '' } = req.body;
+        const { conversationId, senderId, message, receiverId} = req.body;
         if (!senderId || !message)
             return res.status(400).send('Please fill all required fields')
         if (conversationId === 'new' && receiverId) {
@@ -275,6 +278,27 @@ app.get('/users/:userId', async (req, res) => {
         console.log('Error', error)
     }
 })
+
+//get users expertise
+app.get('/user', async (req, res) => {
+    try {
+        const users = await User.find({ isExpert: true });
+        const usersData = Promise.all(users.map(async (user) => {
+            return {
+                user: {
+                    phone: user.phone,
+                    username: user.username,
+                    receiverId: user._id
+                }
+            }
+        }))
+        res.status(200).json(await usersData);
+    } catch (error) {
+        console.log('Error', error)
+    }
+})
+
+
 
 //resource not found
 app.use((req,res,next) => {

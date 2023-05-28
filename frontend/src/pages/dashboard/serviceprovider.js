@@ -15,7 +15,7 @@ export default function ServiceProvider(){
     useEffect(() => {
         const logginUser = JSON.parse(localStorage.getItem("userDetails"));
         const fetchConversations = async (conversationID) => {
-            const res = await fetch("http://localhost:5000/api/conversations/${logginUser.id}", {
+            const res = await fetch("http://localhost:5656/conversation/${logginUser.id}", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -23,25 +23,25 @@ export default function ServiceProvider(){
             });
             const data = await res.json();
             setConversation(data);
+            console.log('conversation' + data);
         };
         fetchConversations();
     }, []);
 
-    const fetchmessage = async (conversationID) => {
-        const res = await fetch("http://localhost:5000/api/messages/${conversationID}", {
+    const fetchmessage = async (conversationId) => {
+        const res = await fetch("http://localhost:5656/message/${conversationID}", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         });
-        body: JSON.stringify({ });
-        //body: JSON.stringify({ conversationID, senderID: user.id, message, receiverID });
+        body: JSON.stringify({ conversationId, senderId: user.id, message, receiverId: "2" });
         const data = await res.json();
         setConversation(data);
     };
 
     useEffect(() => {
-        setSocket(io("ws://localhost:5000"));
+        setSocket(io("http://localhost:4545"));
     }, [socket]);
 
     useEffect(() => {
@@ -56,6 +56,21 @@ export default function ServiceProvider(){
         );
     }, [socket, user]);
 
+    useEffect(() => {
+        const getContacts = async () => {
+            const res = await fetch("http://localhost:5656/users", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            setContacts(data);
+            console.log(data);
+        };
+        getContacts();
+    }, []);
+
     const sendMessage = async(e) => {
         e.preventDefault();
         console.log("sendMessage");
@@ -63,20 +78,22 @@ export default function ServiceProvider(){
         setConversation([...conversation, { sender: user.id, receiver: "2", message: message }]);
         setMessage("");
 
+        const receiverId = "2";
+        const senderId = user.id;
+        const conversationId = "1";
+
         socket?.emit("sendMessage", {
-            senderID: user.id,
-            receiverID: "2",
+            senderId: user.id,
+            receiverId: "2",
             text: message,
-            conversationID: message?.receiver?._id,
         });
 
-        const res = await fetch("http://localhost:5000/api/messages", {
+        const res = await fetch("http://localhost:5656/message", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ }),
-            // body: JSON.stringify({ conversationID, senderID, message, receiverID }),
+            body: JSON.stringify({ conversationId, senderId, message, receiverId }),
         });
         const data = await res.json();
         setConversation([...conversation, data]);
@@ -99,13 +116,22 @@ export default function ServiceProvider(){
                 <div style={{marginLeft: "20px"}}>
                     <div className='text-start text-lg'>Messages </div>
                     <div className='flex items-center text-start' style={{marginTop: "20px"}} >
-                        {contacts.map((contacts) => (
-                            <div className='cursor-pointer flex' onClick={fetchmessage}>
-                                <h3 className='text-lg font-bold'>{contacts.name}</h3>
-                                <p className='text-sm'>Online</p>
-                                <hr/>
-                            </div>
-                        ))}
+                        {contacts.length >0
+                            ? (
+                                contacts.map((c) => (
+                                    <div className='flex items-center' onClick={() => fetchmessage(c.conversationId)}>
+                                        <img src={userImage} alt='user' className='serviceProvider__image mt-3'/>
+                                        <div className='serviceProvider__left__name'>
+                                            <h3>{c.name}</h3>
+                                            <p>{c.phone}</p>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : (
+                                <span className='text-lg font-bold'>No Contacts</span>
+                            )
+                        }
+                        
                     </div>
                 </div>
             </div>
@@ -122,30 +148,13 @@ export default function ServiceProvider(){
                 </div>
                 <div className='h-75 border w-100 overflow-auto shadow-sm'>
                     <div className='serviceProvider__middle__container__chat'>
-                       {/* <div className='serviceProvider__middle__container__chat__left'>
-                            Hii!
-                        </div>
-                        <div className='serviceProvider__middle__container__chat__right'>
-                            Hello!
-                        </div>
-                        <div className='serviceProvider__middle__container__chat__left'>
-                            Welcome to Ekunjo support! How can I help you?
-                        </div>
-                        <div className='serviceProvider__middle__container__chat__right'>
-                            I am facing problems with my mango tree. I tried a lot of things but nothing worked. Can you help me?
-                        </div>
-                        <div className='serviceProvider__middle__container__chat__left'>
-                            Sure! Please send me the pictures of your tree.
-                        </div>
-                        <div className='serviceProvider__middle__container__chat__right'>
-                            <img src={userImage} alt='user' className='serviceProvider__image '/>
-                        </div> */}
-                        {
-                            conversation.map((c) => (
-                                <div className={c.sender === user.id ? "serviceProvider__middle__container__chat__right" : "serviceProvider__middle__container__chat__left"}>
-                                    {c.message}
-                                </div>
-                            )) 
+                        {conversation.length === 0 ? (
+                        conversation.map((c) => (
+                            <div className={c.sender === user.id ? "serviceProvider__middle__container__chat__right" : "serviceProvider__middle__container__chat__left"}>
+                                {c.message}
+                            </div>))    ) : (
+                            <span className='serviceProvider__middle__container__chat__start'>Start a conversation</span>
+                        )
                         }
                     </div>
                 </div>

@@ -6,6 +6,7 @@ import Homepage from "./pages/Homepage";
 import Registration from "./pages/registration";
 import Login from "./pages/Login";
 import User from "./pages/dashboard/user";
+import Admin from "./pages/dashboard/admin";
 import ServiceProvider from "./pages/dashboard/serviceprovider";
 
 function ProtectedRoute({children, isExpert=false}){
@@ -35,6 +36,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/user" element={<ProtectedRoute><User/></ProtectedRoute>} />
             <Route path="/serviceprovider" element={<ProtectedRoute isExpert={true}><ServiceProvider/></ProtectedRoute>} />
+            <Route path="/admin" element={<Admin/>} />
             <Route path="/register" element={<Registration/>} />
             <Route path="/login" element={<Login/>} />
           </Routes>
