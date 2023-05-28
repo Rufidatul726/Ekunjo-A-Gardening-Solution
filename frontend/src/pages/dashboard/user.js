@@ -23,7 +23,7 @@ export default function User() {
     react.useEffect(() => {
         const user = JSON.parse(localStorage.getItem('userDetails'));
         setUser(user);
-        console.log(user);
+        console.log(user.username);
     }, []);
 
     react.useEffect(() => {

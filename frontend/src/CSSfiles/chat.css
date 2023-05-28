@@ -56,6 +56,10 @@
     margin-left: 4%;
 }
 
+.serviceProvider__left__name{
+    margin-left: 6%;
+}
+
 .serviceProvider__middle__container{
     width: 75%;
     height: 80px;

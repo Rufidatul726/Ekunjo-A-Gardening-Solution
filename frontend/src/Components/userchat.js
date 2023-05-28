@@ -7,12 +7,18 @@ import sendImage from '../images/send.png';
 export default function UserChat(){
     const [message, setMessage] = useState("");
     const [conversation, setConversation] = useState([]);
-    const [user, setUser] = useState("JSON.parse(localStorage.getItem('userDetails'))");
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("userDetails"));
+        setUser(user);
+        console.log(user);
+    }, []);
 
     useEffect(() => {
         const logginUser = JSON.parse(localStorage.getItem("userDetails"));
         const fetchConversations = async (conversationID) => {
-            const res = await fetch("http://localhost:5000/api/conversations/${logginUser.id}", {
+            const res = await fetch("http://localhost:5656/api/conversations/${logginUser.id}", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -25,7 +31,7 @@ export default function UserChat(){
     }, []);
 
     const fetchmessage = async (conversationID) => {
-        const res = await fetch("http://localhost:5000/api/messages/${conversationID}", {
+        const res = await fetch("http://localhost:5656/api/messages/${conversationID}", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -39,13 +45,12 @@ export default function UserChat(){
 
     const sendMessage = async(e) => {
         e.preventDefault();
-        console.log("sendMessage");
         console.log(message);
-        setConversation([...conversation, { sender: user.id, receiver: "2", message: message }]);
+        setConversation([...conversation, { sender: user.id, receiver: " ", message: message }]);
         setMessage("");
 
         
-        const res = await fetch("http://localhost:5000/api/messages", {
+        const res = await fetch("http://localhost:5656/api/messages", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -64,17 +69,15 @@ export default function UserChat(){
         <div className='serviceProvider__container'>
             <div className='user__middle'>
                 <div className='serviceProvider__middle__container mt-3'>
-                    <img src={userImage} alt='user' className='serviceProvider__image ml-4'/>                
+                    <img src={userImage} alt='user' className='serviceProvider__image mx-4'/>                
                     <div className='ml-14 mx-14'>
-                        <div className='serviceProvider__left__name mt-3 '>
-                            <h3>User Name</h3>
-                            <p>Online</p>
+                        <div className='serviceProvider__left__name mt-3'>
+                            <h3>{user.username}</h3>
+                            <p>{user.phone}</p>
                         </div>
                     </div>
                 </div>
-                <div className='h-75 border w-100 overflow-scroll shadow-sm'
-                    style={{scrollBehavior: 'smooth'}}
-                >
+                <div className='h-75 border w-100 overflow-scroll shadow-sm' style={{scrollBehavior: 'smooth'}}>
                     <div className='serviceProvider__middle__container__chat'>
                         {
                             conversation.map((c) => (
@@ -94,7 +97,6 @@ export default function UserChat(){
                     </button>
                 </div>
             </div>
-            {/* <div className='serviceProvider__right'></div> */}
         </div>
       </div>
     );
