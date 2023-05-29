@@ -26,7 +26,7 @@ export default function Admin() {
             setSpName(tempsp.username);
             setSpPhone(tempsp.phone);
             setServiceProviders(serviceProvidersFromServer);
-            
+
             console.log(serviceProviders);
         };
 
@@ -59,19 +59,13 @@ export default function Admin() {
 
     const handleChange = (e) => {
          const searchItem = e.target.value;
-        if (searchItem === "") {
-            setServiceProviders(serviceProviders);
-        } else {
-            const newServiceProviders = serviceProviders.filter((serviceProvider) => {
-                return Object.values(serviceProvider)
-                    .join(" ")
-                    .toLowerCase()
-                    .includes(searchItem.toLowerCase());
-            });
-            setServiceProviders(newServiceProviders);
+        if(searchItem === spPhone) {
+            console.log("found");
+            
         }
-       
-        console.log(searchItem);
+        else {
+            console.log("not found");
+        }
     }
 
     return (
@@ -83,8 +77,8 @@ export default function Admin() {
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="section-title text-center">
-                                    <div class="title-text">
-                                        <h2>Admin Name</h2>
+                                    <div class="title-text mb-6">
+                                        <h2>Mahmudul Alam</h2>
                                     </div>
                                     
                                 </div>
@@ -94,7 +88,7 @@ export default function Admin() {
                             <div class="col-lg-12">
                                 <div className="serach-box">
                                     <form className="form-inline">
-                                        <label><h2>Search for a service provider</h2></label>
+                                        <label><h3>Search for a service provider</h3></label>
                                         <input type="text" placeholder="Enter phone number"  onChange={handleChange} className="form-control" />
                                     </form>
                                 </div>
@@ -112,50 +106,39 @@ export default function Admin() {
                                                         <th class="text-center" scope="col">Serial</th>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Phone number</th>
-                                                        <th scope="col">Add</th>
                                                         <th scope="col">Remove</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr class="inner-box">
-                                                        <th scope="row">
-                                                            <div class="event-date">
-                                                                <span>1</span>
-                                                            </div>
-                                                        </th>
-                                                        <td>
-                                                            
-                                                        </td>
-                                                        <td>
-                                                            <div class="event-wrap">
-                                                                <span>Name</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="r-no">
-                                                                <span>01234567890</span>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="primary-btn">
-                                                                <a class="btn btn-primary" href="#">
-                                                                    <i class="fas fa-plus">
-                                                                        <img src="https://img.icons8.com/ios/50/000000/plus.png"/>
-                                                                    </i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="primary-btn">
-                                                                <a class="btn btn-primary" href="#">
-                                                                    <i class="fas fa-minus">
-                                                                        <img src="https://img.icons8.com/ios/50/000000/minus.png"/>
-                                                                    </i>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
+                                                {
+                                                    spId.map((sp, index) => (
+                                                        <tbody>
+                                                            <tr class="inner-box">
+                                                                <th scope="row">
+                                                                    <span>{index+1}</span>
+                                                                </th>
+                                                                <td>
+                                                                    <div class="event-wrap">
+                                                                        <span>{spName}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="r-no">
+                                                                        <span>{spPhone}</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="primary-btn">
+                                                                        <a class="btn btn-primary" href="#">
+                                                                            <i class="fas fa-minus">
+                                                                                <img src="https://img.icons8.com/ios/50/000000/minus.png"/>
+                                                                            </i>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    ))
+                                                }
                                             </table>
                                         </div>
                                     </div>
