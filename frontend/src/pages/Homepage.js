@@ -12,7 +12,7 @@ export default function Homepage(){
         <div id='home-body'>
             <MyNavbar/>
             <div id='homepage-div'>
-                <section id="hero" className=" d-flex flex-column align-items-center justify-content-center">
+                {/* <section id="hero" className=" d-flex flex-column align-items-center justify-content-center">
 
                     <div className="container">
                     <div className="row d-flex justify-content-center">
@@ -40,7 +40,7 @@ export default function Homepage(){
                         </div>
                     </div>
                     </div>
-                </section>
+                </section> */}
                 <div id='card-whole-div' ref={serviceref}>
                     <OurServices/>
                 </div>

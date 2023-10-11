@@ -13,12 +13,10 @@ function ProtectedRoute({children, isExpert=false}){
   const isLoggedin = localStorage.getItem('token') !== null || false;
 
   if(!isLoggedin){
-    console.log("redirecting");
     return <Navigate to="/login" />;
   }
 
   else if(isLoggedin && !isExpert){
-    console.log("logged in");
     return children;
   }
 

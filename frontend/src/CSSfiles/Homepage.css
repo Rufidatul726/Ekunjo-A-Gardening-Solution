@@ -1,6 +1,5 @@
 #home-body{
   background: linear-gradient(rgba(77, 151, 103, 0.425),  rgba(135, 247, 174, 0.425), rgba(255, 255, 255, 0.5) );
-  height: 72vh;
   width: 100%;
   padding-left: 0%;
   padding-right: 0%;
@@ -9,7 +8,6 @@
 
 #homepage-div{
   background: linear-gradient(rgba(77, 151, 103, 0.425),  rgba(135, 247, 174, 0.425), rgba(255, 255, 255, 0.5) );
-  height: 70vh;
   width: 100%;
   padding-left: 5%;
   padding-right: 5%;
