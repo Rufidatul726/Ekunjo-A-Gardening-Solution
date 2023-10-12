@@ -63,26 +63,23 @@ export default function OurServices() {
 
 
     return (
-        <div >
-            <Button className="col-sm-3 d-flex flex-column justify-content-center align-items-center button-36" data-aos="fade-up" data-aos-delay="200" onClick={handleNurseryClick}>
-                <h3 className="card-title">Find Nursery</h3>
-            </Button>
-            <Button className="col-sm-3 d-flex flex-column justify-content-center align-items-center button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handlePlantDetailsClick}>
-                <h3 className="card-title">Search plant details</h3>
-            </Button>
-            <Button className="col-sm-3 d-flex flex-column justify-content-center align-items-center button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handleFertilizerClick}>
-                <h3 className="card-title">Get amount of fertilizer</h3>
-            </Button>
-            <Button className="col-sm-3 d-flex flex-column justify-content-center align-items-center button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handleDiseaseClick}>
-                <h3 className="card-title">View Disease of Plant</h3>
-            </Button>
+        <div className='row mt-5'>
+            <div className='col d-flex flex-column'>
+                <Button className="col-md-4 button-36" data-aos="fade-up" data-aos-delay="200" onClick={handleNurseryClick}>
+                    <h3 className="card-title">Find Nursery</h3>
+                </Button>
+                <Button className="col-md-4 button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handlePlantDetailsClick}>
+                    <h3 className="card-title">Search plant details</h3>
+                </Button>
+                <Button className="col-md-4 button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handleFertilizerClick}>
+                    <h3 className="card-title">Get amount of fertilizer</h3>
+                </Button>
+                <Button className="col-md-4 button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handleDiseaseClick}>
+                    <h3 className="card-title">View Disease of Plant</h3>
+                </Button>
+            </div>
 
-            <div id='popup-div'
-                style={{
-                    marginTop: "100px",
-                    marginBottom: "100px",
-                    paddingBottom: "100px",
-                }}>
+            <div className='col'>
                 {clickNursery &&
                     <div ref={clickNurseryRef}>
                         <FindNursery />
