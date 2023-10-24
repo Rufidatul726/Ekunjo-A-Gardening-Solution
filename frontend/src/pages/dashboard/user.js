@@ -1,7 +1,8 @@
 import react, { useEffect } from 'react';
 import '../../CSSfiles/user.css';
 import OurServices from '../../Components/ourservices';
-import Chat from '../../Components/userchat';
+import Chat from '../../Components/chat';
+// import Chat from '../../Components/userchat';
 
 export default function User() {
     const [user, setUser] = react.useState({});

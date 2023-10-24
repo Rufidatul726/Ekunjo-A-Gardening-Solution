@@ -15,7 +15,7 @@ export default function ServiceProvider(){
     useEffect(() => {
         const logginUser = JSON.parse(localStorage.getItem("userDetails"));
         const fetchConversations = async (conversationID) => {
-            const res = await fetch("http://localhost:5656/conversation/${logginUser.id}", {
+            const res = await fetch("http://localhost:5656/conversation/${logginUser._id}", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,10 +42,11 @@ export default function ServiceProvider(){
 
     useEffect(() => {
         setSocket(io("http://localhost:4545"));
+        console.log(socket);
     }, [socket]);
 
     useEffect(() => {
-        socket?.emit("addUser", user.id);
+        socket?.emit("addUser", user._id);
         socket?.on("getUsers", (users) => {
             console.log(users);
         });

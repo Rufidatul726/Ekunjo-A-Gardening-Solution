@@ -298,6 +298,25 @@ app.get('/user', async (req, res) => {
     }
 })
 
+//get all users
+app.get('/users', async (req, res) => {
+    try {
+        const users = await User.find({});
+        const usersData = Promise.all(users.map(async (user) => {
+            return {
+                user: {
+                    phone: user.phone,
+                    username: user.username,
+                    receiverId: user._id
+                }
+            }
+        }))
+        res.status(200).json(await usersData);
+    } catch (error) {
+        console.log('Error', error)
+    }
+})
+
 
 
 //resource not found

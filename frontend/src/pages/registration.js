@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Registration() {
@@ -22,33 +22,7 @@ export default function Registration() {
                 setConfirmPassword("");
                 return;
             }
-
-            // if(!isValidPhoneNumber(phone)){
-            //     setErrorMessage("Please enter a valid phone number.");
-            //     setPhone("");
-            //     return;
-            // }
-            console.log("Name:", username);
-            console.log("Phone:", phone);
-            console.log("Password:", password);
-            console.log("Confirm Password:", confirmPassword);
             setErrorMessage("");
-
-            //Check if phone number already exists
-            // try{
-            //     const response = await axios.get("http://localhost:5656/users/register", {phone});
-            //     const data = response.json();
-            //     console.log(data);
-            //     if(data){
-            //         setErrorMessage("Phone number already exists. Please try again.");
-            //         setPhone("");
-            //         return;
-            //     }
-
-            //     }catch(err){
-            //     console.log(err);
-            // }
-
 
 
             //Send data to backend
