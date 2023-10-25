@@ -1,5 +1,6 @@
-import '../CSSfiles/service.css';
+// import '../CSSfiles/service.css';
 import React from 'react';
+import styled from 'styled-components';
 import { Button } from 'react-bootstrap';
 import PlantDetails from '../pages/services/viewPlantDetails';
 import FindNursery from '../pages/services/nursery';
@@ -63,39 +64,78 @@ export default function OurServices() {
 
 
     return (
-        <div className='row mt-5'>
-            <div className='col d-flex flex-column'>
-                <Button className="col-md-4 button-36" data-aos="fade-up" data-aos-delay="200" onClick={handleNurseryClick}>
-                    <h3 className="card-title">Find Nursery</h3>
-                </Button>
-                <Button className="col-md-4 button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handlePlantDetailsClick}>
-                    <h3 className="card-title">Search plant details</h3>
-                </Button>
-                <Button className="col-md-4 button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handleFertilizerClick}>
-                    <h3 className="card-title">Get amount of fertilizer</h3>
-                </Button>
-                <Button className="col-md-4 button-36 mt-3" data-aos="fade-up" data-aos-delay="200" onClick={handleDiseaseClick}>
-                    <h3 className="card-title">View Disease of Plant</h3>
-                </Button>
+        <Container>
+            <div className="button-container">
+                <Button className="button" onClick={handlePlantDetailsClick}>Plant Details</Button>
+                <Button className="button" onClick={handleNurseryClick}>Find Nursery</Button>
+                <Button className="button" onClick={handleFertilizerClick}>Get Fertilizer Amount</Button>
+                <Button className="button" onClick={handleDiseaseClick}>View Plant Disease</Button>
             </div>
-
-            <div className='col'>
+            <div className="current_service">
+                {clickPlant && <PlantDetails ref={clickPlantRef} />}
                 {clickNursery &&
-                    <div ref={clickNurseryRef}>
-                        <FindNursery />
-                    </div>
+                    <div className="nursery" ref={clickNurseryRef}><FindNursery/></div>
                 }
-                {clickPlant &&
-                    <div ref={clickPlantRef}> <PlantDetails /> </div>
-                }
-                {clickFertilizer &&
-                    <div ref={clickFertilizerRef}> <Fertilizer /> </div>
-                }
-                {clickDisease &&
-                    <div ref={clickDiseaseRef}> <ViewPlantDisease /> </div>
-                }
+                {clickFertilizer && <Fertilizer ref={clickFertilizerRef} />}
+                {clickDisease && <ViewPlantDisease ref={clickDiseaseRef} />}
             </div>
-
-        </div>
+        </Container>
     )
 }
+
+const Container = styled.div`
+    display: grid;
+    grid-template-columns: 25% 75%;
+    overflow: hidden;
+    .button-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        overflow-y: scroll;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        .button {
+            width: 100%;
+            height: 100%;
+            background-color: #041d036c;
+            border-radius: 5%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    }
+    .current_service {
+        width: 100%;
+        height: 100%;
+        background-color: #041d036c;
+        border-radius: 5%;  
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        h1 {
+            font-size: 1.5rem;
+        }
+        h3 {
+            font-size: 1rem;
+        }
+        .nursery {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            overflow-y: scroll;
+        }
+    }
+`

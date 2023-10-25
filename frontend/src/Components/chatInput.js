@@ -1,12 +1,22 @@
-import React from 'react'
+import React , {useState} from 'react';
 import styled from 'styled-components';
 
-const ChatInput = ({message, setMessage, chat}) => {
+const ChatInput = ({handleChat}) => {
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if(message.length > 0){
+            handleChat(message);
+            setMessage('');
+        }
+    }
+
   return (
     <Container>
-        <form>
+        <form onSubmit={handleSubmit}>
             <input type="text" placeholder="Type a message" value={message} onChange={(e) => setMessage(e.target.value)}/>
-            <button type="submit">Send</button>
+            <button type="submit" onClick={handleSubmit}>Send</button>
         </form>
     </Container>
   )

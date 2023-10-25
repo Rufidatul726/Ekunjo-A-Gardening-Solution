@@ -46,7 +46,7 @@ function Login() {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userDetails", JSON.stringify(data.user));
                 data.user.isExpert ? localStorage.setItem("isExpert", "true") : localStorage.setItem("isExpert", "false");
-                data.user.isExpert ? Navigate('/serviceprovider') : Navigate('/user');
+                data.user.isExpert ? Navigate('/serviceprovider') : Navigate('/');
             }
         }
 

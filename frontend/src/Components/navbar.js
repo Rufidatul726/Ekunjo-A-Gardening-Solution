@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import Logo from '../images/Logo.png';
+import Logout from './logout';
 import '../CSSfiles/navbar.css';
 
 
@@ -23,7 +24,7 @@ function MyNavbar() {
           {isLoggedin ? (
             <Nav className="mr-auto">
               <Nav.Link href="/user">Dashboard</Nav.Link>
-              <Nav.Link href="/logout">Log Out</Nav.Link>
+              <Logout/>
             </Nav>
             ): (
             <Nav className="mr-auto">

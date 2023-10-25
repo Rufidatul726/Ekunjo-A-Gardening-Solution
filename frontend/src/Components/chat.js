@@ -23,7 +23,6 @@ const Chat = () => {
             navigate('/login');
         }
         setUser(user);
-        console.log(user.username);
     }, [navigate]);
 
     useEffect(() => {

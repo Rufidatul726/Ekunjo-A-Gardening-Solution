@@ -11,8 +11,6 @@ const Contacts = ({contacts, user, changeCurrentSelected}) => {
     const handleCurrentSelected = (index, chat) => {
         setCurrentSelected(index);
         changeCurrentSelected(chat);
-        console.log(currentSelected);
-        console.log(chat);
     }
 
   return (

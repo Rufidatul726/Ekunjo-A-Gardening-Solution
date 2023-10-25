@@ -11,49 +11,28 @@ const ChatContainer = ({currentSelected, user}) => {
 
   useEffect(() => {
     const fetchChat = async () => {
-      // const res = await axios.get(``);
-      // console.log(res.data);
-      // setMessages(res.data);
-      setMessages([
-        {
-          "sender": "sachin",
-          "receiver": "sachin",
-          "message": "Hey, how are you?",
-          "timestamp": "2021-06-20T12:15:00.000Z",
-          "read": true
-        },
-        {
-          "sender": "sachin",
-          "receiver": "sachin",
-          "message": "Hey, how are you?",
-          "timestamp": "2021-06-20T12:15:00.000Z",
-          "read": true
-        },
-        {
-          "sender": "sachin",
-          "receiver": "sachin",
-          "message": "Hey, how are you?",
-          "timestamp": "2021-06-20T12:15:00.000Z",
-          "read": true
-        },
-        {
-          "sender": "sachin",
-          "receiver": "sachin",
-          "message": "Hey, how are you?",
-          "timestamp": "2021-06-20T12:15:00.000Z",
-          "read": true
-        },
-        {
-          "sender": "sachin",
-          "receiver": "sachin",
-          "message": "Hey, how are you?",
-          "timestamp": "2021-06-20T12:15:00.000Z",
-          "read": true
-        },
-      ]);
+      const res = await axios.post(`http://localhost:5656/getmsg`, {
+        from: user.id,
+        to: currentSelected.user.receiverId
+      });
+      console.log(res.data);
+      setMessages(res.data);
     }
     fetchChat();
-  }, [user.username]);
+  }, [currentSelected, user]);
+
+  const handleChat = async (message) => {
+    console.log(message);
+    console.log(user.id);
+    console.log(currentSelected.user.receiverId);
+    const res = await axios.post(`http://localhost:5656/addmsg`, {
+      from: user.id,
+      to: currentSelected.user.receiverId,
+      message: message
+    });
+    console.log(res.data);
+    setMessages([...messages, res.data]);
+  }
     
   return (
     <Container>
@@ -65,21 +44,30 @@ const ChatContainer = ({currentSelected, user}) => {
             <p>Online {currentSelected.status}</p>
           </div>
         </div>
-        <Logout user={user}/>
       </div>
       <div className="chat-body">
         <div className="chat-message">
-          {
-            messages.map((message, index) => (
-              <div className={`message ${message.sender === user.username && 'sender'}`} key={index}>
-                <p>{message.message}</p>
+          {messages.map((message) => {
+            return (
+              <div 
+              // ref={scrollRef} key={uuidv4()}
+              >
+                <div
+                  className={`message ${
+                    message.fromSelf ? "sended" : "recieved"
+                  }`}
+                >
+                  <div className="content ">
+                    <p>{message.message}</p>
+                  </div>
+                </div>
               </div>
-            ))
-          }
+            );
+          })}
         </div>
       </div>
       <div className="chat-input">
-        <ChatInput message={message} setMessage={setMessage} chat={chat}/>
+        <ChatInput handleChat={handleChat}/>
       </div>
     </Container>
   )
@@ -126,19 +114,40 @@ const Container = styled.div`
         height: 70%;
         background-color: #fff;
         border-radius: 0 0 15px 15px;
+        overflow-y: scroll;
+        padding: 1rem;
         .chat-message {
             width: 100%;
             height: 100%;
-            overflow-y: scroll;
-            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             .message {
                 width: 100%;
-                height: 15%;
-                background-color: #4d9767;
-                border-radius: 15px;
-                padding: 1rem;
-                p {
+                height: 100%;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 1rem;
+                &.sended {
+                    justify-content: flex-end;
+                }
+                &.recieved {
+                    justify-content: flex-start;
+                }
+                .content {
+                    width: 40%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 15px;
+                    background-color: #4d9767;
                     color: #fff;
+                    padding: 0.5rem 1rem;
+                    p {
+                        font-size: 1rem;
+                    }
                 }
             }
         }

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { io } from 'socket.io-client';
-import '../../CSSfiles/chat.css';
 import userImage from '../../images/user.png';
 import sendImage from '../../images/send.png';
 

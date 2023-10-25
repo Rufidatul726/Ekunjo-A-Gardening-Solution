@@ -3,10 +3,6 @@ import styled from 'styled-components';
 import Robot from '../images/robot.gif';
 
 const Welcome = ({user}) => {
-    useEffect(() => {
-        console.log(user);
-    }, [user]);
-
   return (
     <Container>
         <div className="welcome">

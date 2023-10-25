@@ -18,6 +18,7 @@ require("dotenv").config();
 const User = require("./models/user.model");
 const Conversation = require("./models/conversation.model");
 const Message = require("./models/message.model");
+const MessagesByA = require("./models/messageByA");
 
 //encryption
 const saltRounds = 10;
@@ -92,10 +93,9 @@ app.use('/plants', plantRouter);
 
 //register route
 app.post("/register", async (req,res) =>{
-    const user = await User.findOne({phone : req.body.phone});
-    if(user) res.status(400).send("user already exists");
-
     try {
+        const user = await User.findOne({phone : req.body.phone});
+        if(user) res.status(400).send("user already exists");
         const hash = await new Promise((resolve, reject) => {
             bcrypt.hash(req.body.password, saltRounds, function(err,hash){
                 if(err) reject(err);
@@ -317,6 +317,48 @@ app.get('/users', async (req, res) => {
     }
 })
 
+app.post("/addmsg", async (req,res) => {
+    try {
+        const { from, to, message } = req.body;
+        console.log(from, to, message);
+
+        const data = await MessagesByA.create({
+            message: { text: message },
+            users: [from, to],
+            sender: from,
+            });
+
+        if (data) return res.json({ msg: "Message added successfully." });
+        else return res.json({ msg: "Failed to add message to the database" });
+      } catch (ex) {
+        console.log(ex);
+        next(ex);
+      }
+});
+
+app.post("/getmsg", async (req,res,next) => {
+    try {
+        const { from, to } = req.body;
+        console.log(from, to);
+
+        const messages = await MessagesByA.find({
+          users: {
+            $all: [from, to],
+          },
+        }).sort({ updatedAt: 1 });
+    
+        const projectedMessages = messages.map((msg) => {
+          return {
+            fromSelf: msg.sender.toString() === from,
+            message: msg.message.text,
+          };
+        });
+        res.json(projectedMessages);
+
+      } catch (ex) {
+        next(ex);
+      }
+});
 
 
 //resource not found

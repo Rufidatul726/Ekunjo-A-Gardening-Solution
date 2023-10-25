@@ -125,7 +125,7 @@ const FindNursery = () => {
     };
   }, []);
 
-  return <div id="map" style={{ height: '100vh' }} />;
+  return <div id="map" style={{ height: '100vh', width: '100%'}} />;
 };
 
 export default FindNursery;
