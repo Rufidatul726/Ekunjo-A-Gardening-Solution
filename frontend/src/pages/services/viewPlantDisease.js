@@ -37,7 +37,8 @@ export default function ViewPlantDisease(){
                     <form method="post" onSubmit={handleSubmit} encType="multipart/form-data">
                         <div className="form-group files">
                             <label>Upload Your File </label>
-                            <input type="file" className="form-control" multiple="" onChange={handleChange}/>
+                            {/* <input type="file" className="form-control" multiple="" onChange={handleChange}/> */}
+                            <input type="file" onChange={(e) => setSelectedFile(e.target.files[0])} />
                         </div>
                         <button type="submit" className="btn btn-outline" style={{height: "40px" , margin: "10px"}} onClick={handleSubmit}>Submit</button>
                     </form>

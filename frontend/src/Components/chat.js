@@ -40,9 +40,9 @@ const Chat = () => {
             <div className="container">
                 <Contacts contacts={contacts} user={user} changeCurrentSelected={handleCurrentSelected}/>
                 {
-                    Object.keys(currentSelected).length === 0 ? <Welcome user={user}/> : (
-                        <ChatContainer currentSelected={currentSelected} user={user}/>        
-                    )
+                    currentSelected.user ? 
+                    <ChatContainer currentSelected={currentSelected} user={user}/> : 
+                    <Welcome user={user}/>
                 }
             </div>
         </Container>
