@@ -4,9 +4,11 @@ import Logo from '../images/Logo.png';
 import Logout from './logout';
 import '../CSSfiles/navbar.css';
 
-
 function MyNavbar() {
-  const isLoggedin = localStorage.getItem('token') !== null || false;
+  const user = JSON.parse(localStorage.getItem('userDetails'));
+  const isLoggedin = user ? true : false;
+  console.log(isLoggedin);
+  console.log(user);
 
     return (
         <Navbar expand="lg" className="navbar">

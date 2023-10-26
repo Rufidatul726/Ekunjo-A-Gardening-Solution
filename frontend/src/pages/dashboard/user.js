@@ -2,12 +2,13 @@ import react, { useEffect } from 'react';
 import '../../CSSfiles/user.css';
 import OurServices from '../../Components/ourservices';
 import Chat from '../../Components/chat';
+import UserNav from '../../Components/usernav';
 // import Chat from '../../Components/userchat';
 
 export default function User() {
     const [user, setUser] = react.useState({});
-    const [plants, setPlants] = react.useState([]);
-    const [newPlant, setNewPlant] = react.useState('');
+    // const [plants, setPlants] = react.useState([]);
+    // const [newPlant, setNewPlant] = react.useState('');
     const [clickService, setClickService] = react.useState(false);
     const [clickChat, setClickChat] = react.useState(false);
     
@@ -27,46 +28,47 @@ export default function User() {
         console.log(user.username);
     }, []);
 
-    react.useEffect(() => {
-        const plants = JSON.parse(localStorage.getItem('plants'));
-        setPlants(plants);
-        if(plants === null){
-            const temp = ['lily', 'rose', 'tulip'];
-            localStorage.setItem('plants', JSON.stringify(temp));
-            setPlants(temp);
-        }
-    }, []);
+    // react.useEffect(() => {
+    //     const plants = JSON.parse(localStorage.getItem('plants'));
+    //     setPlants(plants);
+    //     if(plants === null){
+    //         const temp = ['lily', 'rose', 'tulip'];
+    //         localStorage.setItem('plants', JSON.stringify(temp));
+    //         setPlants(temp);
+    //     }
+    // }, []);
 
-    const handlePlantClick = () => {
-        const newPlant = prompt('Enter plant name');
-        const newPlants = [...plants, newPlant];
-        localStorage.setItem('plants', JSON.stringify(newPlants));
-        setPlants(newPlants);
-    }
+    // const handlePlantClick = () => {
+    //     const newPlant = prompt('Enter plant name');
+    //     const newPlants = [...plants, newPlant];
+    //     localStorage.setItem('plants', JSON.stringify(newPlants));
+    //     setPlants(newPlants);
+    // }
 
-    const handlePlantSubmit = (event) => {
-        event.preventDefault();
-        const newPlants = [...plants, newPlant];
-        localStorage.setItem('plants', JSON.stringify(newPlants));
-        setPlants(newPlants);
-        setNewPlant('');
-    }
+    // const handlePlantSubmit = (event) => {
+    //     event.preventDefault();
+    //     const newPlants = [...plants, newPlant];
+    //     localStorage.setItem('plants', JSON.stringify(newPlants));
+    //     setPlants(newPlants);
+    //     setNewPlant('');
+    // }
 
-    const handleInputChange = (event) => {
-        setNewPlant(event.target.value);
-    }
+    // const handleInputChange = (event) => {
+    //     setNewPlant(event.target.value);
+    // }
 
-    const handleChatClick = (event) => {
-        setClickChat(!clickChat);
-        setClickService(false);
-        chatref.current.scrollIntoView({ behavior: "smooth" });
-    }
+    // const handleChatClick = (event) => {
+    //     setClickChat(!clickChat);
+    //     setClickService(false);
+    //     chatref.current.scrollIntoView({ behavior: "smooth" });
+    // }
 
 
         return (
             <div className="profile-dashboard d-flex flex-column align-items-center justify-content-center">
+                <UserNav />
                 <h1>Welcome {user.username}</h1>
-                {plants.length > 3 ? 
+                {/* {plants.length > 3 ? 
                     <div className="plant-list">
                         <h2>Your plants are:</h2>
                         <ul>
@@ -80,9 +82,9 @@ export default function User() {
                         You have no plants yet. Add a plant to get started.
                     </div> 
                 
-                }
+                } */}
 
-                <div className="dashboard-components text-align-center">
+                {/* <div className="dashboard-components text-align-center">
                     <div className="dashboard-component btn btn-outline">
                         <form onSubmit={handlePlantSubmit} className="form-inline">
                             <label htmlFor="newPlant"><h2>Add a new plant</h2></label>
@@ -94,10 +96,8 @@ export default function User() {
                     </div>
                     <div className="dashboard-component btn btn-outline" onClick={handleChatClick}>
                             <label className='form-label'><h2>Chat with Us</h2></label>
-                            {/* <img src='ChatImg' alt='Click Here'/> */}
-                            {/* <textarea className='form-control' rows={3}  placeholder='Enter your question' value={newMessage}/> */}
                     </div>
-                </div>
+                </div> */}
                 <div className="chat" ref={chatref}>
                     {
                         clickChat && <Chat/>

@@ -6,6 +6,7 @@ import PlantDetails from '../pages/services/viewPlantDetails';
 import FindNursery from '../pages/services/nursery';
 import Fertilizer from '../pages/services/getFertilizerAmount';
 import ViewPlantDisease from '../pages/services/viewPlantDisease';
+import WelcomeEkunjo from './welcomeEkunjo';
 
 export default function OurServices() {
 
@@ -72,6 +73,10 @@ export default function OurServices() {
                 <Button className="button" onClick={handleDiseaseClick}>View Plant Disease</Button>
             </div>
             <div className="current_service">
+                {
+                    !clickPlant && !clickNursery && !clickFertilizer && !clickDisease &&
+                   <WelcomeEkunjo/>
+                }
                 {clickPlant && <PlantDetails ref={clickPlantRef} />}
                 {clickNursery &&
                     <div className="nursery" ref={clickNurseryRef}><FindNursery/></div>
@@ -84,8 +89,10 @@ export default function OurServices() {
 }
 
 const Container = styled.div`
+    width: 100%;
+    height: 87vh;
     display: grid;
-    grid-template-columns: 25% 75%;
+    grid-template-columns: 21% 79%;
     overflow: hidden;
     .button-container {
         width: 100%;
